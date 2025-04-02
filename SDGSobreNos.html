@@ -5,14 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGD - Sobre a Empresa</title>
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     
-    <!-- Estilos Globais -->
-    <link href="/global.css" rel="stylesheet">
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="global.css">
 </head>
 <body>
     <aside class="sidebar">
@@ -60,163 +57,117 @@
                 <span class="menu-text">Contato</span>
             </a>
             
-            <a href="#" class="menu-item logout-link">
+            <a href="SDGTelaLogin.html" class="menu-item">
                 <i class="fas fa-sign-out-alt"></i>
                 <span class="menu-text">Sair</span>
             </a>
         </nav>
     </aside>
-
+    
     <main class="main-content">
         <div class="header">
             <h1 class="page-title">Sobre a Empresa</h1>
             
             <div class="user-info">
-                <span class="user-name">Usuário</span>
+                <span class="user-name">Romulo Andrade</span>
                 <div class="user-avatar">RA</div>
             </div>
         </div>
-
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <h3 class="card-title mb-0">Sistema de Gerenciamento de Demandas (SGD)</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <h4>Nossa História</h4>
-                                    <p>
-                                        Fundada em 2025, a SGD nasceu com o propósito de revolucionar o gerenciamento de chamados e suporte técnico. 
-                                        Nossa missão é simplificar e otimizar o fluxo de trabalho de equipes de atendimento, proporcionando uma ferramenta 
-                                        intuitiva e eficiente para registro, acompanhamento e resolução de demandas.
-                                    </p>
-
-                                    <h4 class="mt-4">Nossos Valores</h4>
-                                    <ul class="list-unstyled">
-                                        <li class="mb-2">
-                                            <i class="fas fa-check-circle text-primary me-2"></i>
-                                            <strong>Inovação:</strong> Buscamos constantemente aprimorar nossos sistemas
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-check-circle text-primary me-2"></i>
-                                            <strong>Simplicidade:</strong> Acreditamos que as melhores soluções são intuitivas
-                                        </li>
-                                        <li class="mb-2">
-                                            <i class="fas fa-check-circle text-primary me-2"></i>
-                                            <strong>Eficiência:</strong> Otimizamos processos para economizar tempo
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="card bg-light">
-                                        <div class="card-body text-center">
-                                            <h5>Dados da Empresa</h5>
-                                            <ul class="list-unstyled">
-                                                <li><strong>Fundação:</strong> 2025</li>
-                                                <li><strong>Localização:</strong> São Paulo, SP</li>
-                                                <li><strong>Funcionários:</strong> 15-20</li>
-                                                <li><strong>Clientes:</strong> +50</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        
+        <section class="about-section">
+            <div class="about-header">
+                <div class="about-logo">S.G.D <span>•</span></div>
+                <div class="about-title">
+                    <h2>Sistema de Gerenciamento de Demandas</h2>
+                    <p>Soluções inteligentes para gerenciamento de tickets</p>
+                </div>
+            </div>
+            
+            <div class="about-content">
+                <p>
+                    Fundada em 2025, a S.G.D é uma empresa especializada no desenvolvimento de sistemas para gerenciamento de chamados e suporte técnico. Nossa missão é facilitar o fluxo de trabalho de equipes de atendimento, proporcionando ferramentas eficientes para o registro, acompanhamento e resolução de demandas.
+                </p>
+                
+                <p>
+                    Nosso sistema foi desenvolvido pensando nas necessidades reais de empresas que lidam diariamente com múltiplos chamados técnicos e solicitações de suporte. A interface intuitiva e os recursos avançados de organização tornam o S.G.D uma solução completa para otimizar o atendimento ao cliente e melhorar a produtividade da equipe.
+                </p>
+                
+                <h3>Nossa Visão</h3>
+                <p>
+                    Ser reconhecida como a melhor e mais eficiente solução para gerenciamento de demandas no mercado, contribuindo para o sucesso dos nossos clientes através de um atendimento de excelência.
+                </p>
+                
+                <h3>Nossos Valores</h3>
+                <p>
+                    <strong>Inovação:</strong> Buscamos constantemente aprimorar nossos sistemas e incorporar novas tecnologias.<br>
+                    <strong>Simplicidade:</strong> Acreditamos que as melhores soluções são aquelas fáceis de usar.<br>
+                    <strong>Eficiência:</strong> Nosso compromisso é otimizar processos e economizar tempo.<br>
+                    <strong>Qualidade:</strong> Trabalhamos com excelência em cada etapa do desenvolvimento.<br>
+                    <strong>Colaboração:</strong> Valorizamos o trabalho em equipe e o feedback constante dos nossos clientes.
+                </p>
+            </div>
+        </section>
+        
+        <section class="team-section">
+            <h2 class="section-title">Nossa Equipe</h2>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="/images/romulo.jpg" alt="Romulo Andrade">
+                    </div>
+                    <h3 class="member-name">Romulo Andrade</h3>
+                    <p class="member-role">Gerente de Projetos</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="/images/isabela.jpeg" alt="Isabela Genize">
+                    </div>
+                    <h3 class="member-name">Isabela Genize</h3>
+                    <p class="member-role">Desenvolvedora Frontend</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="/images/gustavo.jpeg" alt="Gustavo Batista">
+                    </div>
+                    <h3 class="member-name">Gustavo Batista</h3>
+                    <p class="member-role">Desenvolvedor Backend</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <img src="/images/helbert.jpg" alt="Helbert Lima">
+                    </div>
+                    <h3 class="member-name">Helbert Lima</h3>
+                    <p class="member-role">UX/UI Designer</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title mb-0">Nosso Time</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-3 text-center mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <img src="/images/romulo.jpg" class="rounded-circle mb-3" alt="Romulo Andrade">
-                                            <h5>Romulo Andrade</h5>
-                                            <p class="text-muted">Gerente de Projetos</p>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
-                                                    <i class="fab fa-linkedin"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-outline-dark btn-sm">
-                                                    <i class="fab fa-github"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 text-center mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <img src="/images/isabela.jpeg" class="rounded-circle mb-3" alt="Isabela Genize">
-                                            <h5>Isabela Genize</h5>
-                                            <p class="text-muted">Desenvolvedora Frontend</p>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
-                                                    <i class="fab fa-linkedin"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-outline-dark btn-sm">
-                                                    <i class="fab fa-github"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 text-center mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <img src="/images/gustavo.jpeg" class="rounded-circle mb-3" alt="Gustavo Batista">
-                                            <h5>Gustavo Batista</h5>
-                                            <p class="text-muted">Desenvolvedor Backend</p>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
-                                                    <i class="fab fa-linkedin"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-outline-dark btn-sm">
-                                                    <i class="fab fa-github"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 text-center mb-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <img src="/images/helbert.jpg" class="rounded-circle mb-3" alt="Helbert Lima">
-                                            <h5>Helbert Lima</h5>
-                                            <p class="text-muted">UX/UI Designer</p>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
-                                                    <i class="fab fa-linkedin"></i>
-                                                </a>
-                                                <a href="#" class="btn btn-outline-dark btn-sm">
-                                                    <i class="fab fa-github"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Scripts Globais -->
-    <script src="/global.js"></script>
+    <!-- JavaScript Global -->
+    <script src="global.js"></script>
 </body>
 </html>

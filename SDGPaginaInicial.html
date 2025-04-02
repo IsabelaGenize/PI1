@@ -4,118 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGD - Sistema de Gerenciamento de Demandas</title>
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
-    
-    <!-- Estilos Globais -->
-    <link href="/global.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="global.css">
 </head>
 <body>
-    <aside class="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-logo">S.G.D <span>•</span></div>
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-img">
+                <i class="fas fa-ticket-alt" style="color: var(--light);"></i>
+            </div>
+            <div>
+                <div class="brand-name">S.G.D <span>•</span></div>
+                <div class="brand-subtitle">Sistema de Gerenciamento de Demandas</div>
+            </div>
         </div>
-        
-        <nav class="sidebar-menu">
-            <a href="SDGPaginaInicial.html" class="menu-item active">
-                <i class="fas fa-home"></i>
-                <span class="menu-text">Página Inicial</span>
-            </a>
-            
-            <a href="SDGDashboard.html" class="menu-item">
-                <i class="fas fa-tachometer-alt"></i>
-                <span class="menu-text">Dashboard</span>
-            </a>
-            
-            <a href="SDGMeusTickets.html" class="menu-item">
-                <i class="fas fa-ticket-alt"></i>
-                <span class="menu-text">Meus Tickets</span>
-            </a>
-            
-            <div class="menu-label">Gerenciamento</div>
-            
-            <a href="#" class="menu-item">
-                <i class="fas fa-tasks"></i>
-                <span class="menu-text">Kanban Board</span>
-            </a>
-            
-            <a href="#" class="menu-item">
-                <i class="fas fa-chart-bar"></i>
-                <span class="menu-text">Relatórios</span>
-            </a>
-            
-            <div class="menu-label">Sistema</div>
-            
-            <a href="SDGSobreNos.html" class="menu-item">
-                <i class="fas fa-building"></i>
-                <span class="menu-text">Nossa Empresa</span>
-            </a>
-            
-            <a href="SDGContatos.html" class="menu-item">
-                <i class="fas fa-envelope"></i>
-                <span class="menu-text">Contato</span>
-            </a>
-            
-            <a href="#" class="menu-item logout-link">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="menu-text">Sair</span>
-            </a>
-        </nav>
-    </aside>
+
+        <div class="user-profile">
+            <div class="user-info">
+                <div class="user-name">Romulo Andrade</div>
+                <div class="user-role">Gerente de Projetos</div>
+            </div>
+            <div class="user-avatar">RA</div>
+        </div>
+    </header>
 
     <main class="main-content">
-        <div class="header">
-            <h1 class="page-title">Página Inicial</h1>
-            
-            <div class="user-info">
-                <span class="user-name">Usuário</span>
-                <div class="user-avatar">RA</div>
-            </div>
-        </div>
+        <h1 style="font-size: 4.5rem; font-weight: 700; color: var(--dark); ;">SGD</h1>
 
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <a href="SDGMeusTickets.html" class="card text-decoration-none">
-                        <div class="card-body text-center">
-                            <i class="fas fa-ticket-alt fa-3x text-primary mb-3"></i>
-                            <h5 class="card-title">Meus Tickets</h5>
-                            <p class="card-text text-muted">Gerencie seus chamados</p>
-                        </div>
-                    </a>
+        <div class="features-grid">
+            <a href="SDGMeusTickets.html" class="feature-card tickets">
+                <div class="feature-icon tickets">
+                    <i class="fas fa-ticket-alt"></i>
                 </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">Meus Tickets</h3>
+                </div>
+            </a>
 
-                <div class="col-md-4 mb-4">
-                    <a href="SDGDashboard.html" class="card text-decoration-none">
-                        <div class="card-body text-center">
-                            <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
-                            <h5 class="card-title">Dashboard</h5>
-                            <p class="card-text text-muted">Visualize estatísticas</p>
-                        </div>
-                    </a>
+            <a href="SDGDashboard.html" class="feature-card dashboard">
+                <div class="feature-icon dashboard">
+                    <i class="fas fa-chart-line"></i>
                 </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">Dashboard</h3>
+                </div>
+            </a>
 
-                <div class="col-md-4 mb-4">
-                    <a href="SDGSobreNos.html" class="card text-decoration-none">
-                        <div class="card-body text-center">
-                            <i class="fas fa-building fa-3x text-info mb-3"></i>
-                            <h5 class="card-title">Sobre a Empresa</h5>
-                            <p class="card-text text-muted">Conheça nossa história</p>
-                        </div>
-                    </a>
+            <a href="SDGSobreNos.html" class="feature-card about">
+                <div class="feature-icon about">
+                    <i class="fas fa-building"></i>
                 </div>
-            </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">Sobre a Empresa</h3>
+                </div>
+            </a>
         </div>
     </main>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <!-- Scripts Globais -->
-    <script src="/global.js"></script>
+    <footer class="footer">
+        &copy; 2025 - Sistema de Gerenciamento de Demandas - Equipe HIRG
+    </footer>
+
+    <!-- JavaScript Global -->
+    <script src="global.js"></script>
 </body>
 </html>

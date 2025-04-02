@@ -5,110 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGD - Login</title>
     
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Carregamento de CSS Global -->
+    <link rel="stylesheet" href="global.css">
     
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     
-    <!-- Estilos Globais -->
-    <link href="/global.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎫</text></svg>">
 </head>
-<body class="bg-light">
-    <div class="container-fluid">
-        <div class="row min-vh-100 align-items-center justify-content-center">
-            <div class="col-md-4">
-                <div class="card shadow-lg border-0">
-                    <div class="card-header bg-primary text-white text-center py-4">
-                        <h2 class="mb-0">S.G.D <span class="text-secondary">•</span></h2>
-                        <small class="text-white-50">Sistema de Gerenciamento de Demandas</small>
-                    </div>
-                    <div class="card-body p-4">
-                        <form id="loginForm" novalidate>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
-                                    <input type="email" class="form-control" id="email" 
-                                           required 
-                                           placeholder="seuemail@exemplo.com">
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Senha</label>
-                                <div class="input-group">
-                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                                    <input type="password" class="form-control" id="password" 
-                                           required 
-                                           placeholder="Sua senha">
-                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                        <i class="fas fa-eye-slash"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Lembrar meu acesso</label>
-                            </div>
-                            
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-sign-in-alt me-2"></i>Entrar
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+<body>
+    <div class="logo-container">
+        <div class="logo">S.G.D <span>•</span></div>
+        <div class="logo-text">Sistema de Gerenciamento de Demandas</div>
+    </div>
+    
+    <div class="container">
+        <div class="login-card">
+            <h2 class="login-title">Acesso ao Sistema</h2>
+            
+            <div class="alert" id="login-alert">
+                Usuário ou senha incorretos. Tente novamente.
+            </div>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Seu email" required>
                 </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">Senha</label>
+                    <input type="password" id="password" class="form-control" placeholder="Sua senha" required>
+                </div>
+                
+                <div class="form-checkbox">
+                    <input type="checkbox" id="remember">
+                    <label for="remember">Lembrar meu acesso</label>
+                </div>
+                
+                <button type="submit" class="btn">Entrar</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Esqueceu sua senha? <a href="#">Recuperar acesso</a></p>
             </div>
         </div>
     </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Scripts Globais -->
-    <script src="/global.js"></script>
+    <div class="footer">
+        &copy; 2025 - Sistema de Gerenciamento de Demandas - Equipe HIRG
+    </div>
     
-    <!-- Script específico de login -->
+    <!-- Carregamento de JavaScript Global -->
+    <script src="global.js"></script>
+    
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const loginForm = document.getElementById('loginForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const togglePasswordBtn = document.getElementById('togglePassword');
-
-        // Credenciais de teste
-        const validCredentials = {
-            'admin@sgd.com': 'admin123',
-            'romulo@sgd.com': 'romulo123'
-        };
-
-        // Toggle de visibilidade da senha
-        togglePasswordBtn.addEventListener('click', function() {
-            const type = passwordInput.type === 'password' ? 'text' : 'password';
-            passwordInput.type = type;
-            this.querySelector('i').classList.toggle('fa-eye');
-            this.querySelector('i').classList.toggle('fa-eye-slash');
-        });
-
-        // Submissão do formulário
-        loginForm.addEventListener('submit', function(e) {
+        document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
-
-            const email = emailInput.value.trim();
-            const password = passwordInput.value.trim();
-
-            if (validCredentials[email] && validCredentials[email] === password) {
-                localStorage.setItem('isLoggedIn', 'true');
-                localStorage.setItem('userEmail', email);
-                window.location.href = 'SDGPaginaInicial.html';
-            } else {
-                showAlert('Credenciais inválidas. Tente novamente.', 'danger');
-            }
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Usando a função handleLogin do objeto global SGD
+            SGD.handleLogin(email, password);
         });
-    });
     </script>
 </body>
 </html>
