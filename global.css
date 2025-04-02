@@ -1,0 +1,228 @@
+/* Variáveis de Cores */
+:root {
+    --primary: #5495F7;
+    --secondary: #166088;
+    --light: #DBE9EE;
+    --dark: #4F6D7A;
+    --gray: #C0D6DF;
+    --light-gray: #DBE9EE;
+    --medium-gray: #C0D6DF;
+    --success: #28a745;
+    --warning: #ffc107;
+    --danger: #dc3545;
+}
+
+/* Reset e Configurações Básicas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light);
+    line-height: 1.6;
+}
+
+/* Layout Padrão */
+.sidebar {
+    width: 250px;
+    background-color: var(--dark);
+    color: white;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: width 0.3s;
+    z-index: 1000;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s;
+}
+
+/* Sidebar */
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.sidebar-menu {
+    padding: 20px 0;
+}
+
+.menu-item {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.menu-item:hover, 
+.menu-item.active {
+    background-color: rgba(255,255,255,0.1);
+    color: white;
+}
+
+.menu-item i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+/* Cabeçalho */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    margin-left: 15px;
+}
+
+/* Botões */
+.btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.btn-secondary {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+
+/* Status de Tickets */
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-new { 
+    background-color: rgba(84, 149, 247, 0.1); 
+    color: #5495F7; 
+}
+
+.status-open { 
+    background-color: rgba(192, 214, 223, 0.1); 
+    color: #C0D6DF; 
+}
+
+.status-in-progress { 
+    background-color: rgba(79, 109, 122, 0.1); 
+    color: #4F6D7A; 
+}
+
+.status-resolved { 
+    background-color: rgba(22, 96, 136, 0.1); 
+    color: #166088; 
+}
+
+.status-closed { 
+    background-color: rgba(219, 233, 238, 0.1); 
+    color: #4F6D7A; 
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+        overflow: hidden;
+    }
+
+    .main-content {
+        margin-left: 70px;
+    }
+
+    .sidebar-logo span {
+        display: none;
+    }
+
+    .menu-text {
+        display: none;
+    }
+
+    .menu-item {
+        justify-content: center;
+        padding: 15px;
+    }
+
+    .menu-item i {
+        margin-right: 0;
+    }
+}
+
+/* Alertas */
+.alert-custom {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1050;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+/* Modal */
+.modal-header {
+    background-color: var(--light);
+    border-bottom: 1px solid var(--gray);
+}
+
+.modal-footer {
+    background-color: var(--light);
+    border-top: 1px solid var(--gray);
+}

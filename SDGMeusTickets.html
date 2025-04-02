@@ -4,500 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGD - Meus Tickets</title>
-    <style>
-        :root {
-            --primary: #5495F7;
-            --secondary: #166088;
-            --light: #DBE9EE;
-            --dark: #4F6D7A;
-            --gray: #C0D6DF;
-            --light-gray: #DBE9EE;
-            --medium-gray: #C0D6DF;
-            --success: #166088;
-            --warning: #5495F7;
-            --danger: #4F6D7A;
-            --info: #C0D6DF;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            min-height: 100vh;
-            display: flex;
-        }
-        
-
-        .sidebar {
-            width: 250px;
-            background-color: var(--dark);
-            color: white;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            border-right: 1px solid rgba(192, 214, 223, 0.2);
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .sidebar-header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .sidebar-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .sidebar-logo span {
-            color: var(--secondary);
-        }
-        
-        .sidebar-menu {
-            padding: 20px 0;
-        }
-        
-        .menu-item {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .menu-item:hover, .menu-item.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        
-        .menu-item i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .menu-label {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 5px 20px;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .user-name {
-            margin-right: 15px;
-            font-weight: 500;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-        }
-        
-
-        .filter-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 20px;
-        }
-        
-        .filter-controls {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .filter-select {
-            padding: 8px 12px;
-            border: 1px solid var(--gray);
-            border-radius: 4px;
-            background-color: white;
-            color: var(--dark);
-            font-size: 0.9rem;
-        }
-        
-        .search-box {
-            display: flex;
-            border: 1px solid var(--gray);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-right: 20px;
-        }
-        
-        .search-input {
-            padding: 8px 12px;
-            border: none;
-            outline: none;
-            font-size: 0.9rem;
-            width: 200px;
-        }
-        
-        .search-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 0 15px;
-            cursor: pointer;
-        }
-        
-        .btn {
-            padding: 8px 16px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.2s;
-        }
-        
-        .btn i {
-            margin-right: 5px;
-        }
-        
-        .btn:hover {
-            background-color: #166088;
-        }
-        
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .section-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .table-container {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            overflow: auto;
-            margin-bottom: 20px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--gray);
-        }
-        
-        th {
-            background-color: var(--light-gray);
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        tr:last-child td {
-            border-bottom: none;
-        }
-        
-        tr:hover td {
-            background-color: rgba(30, 83, 163, 0.03);
-        }
-        
-        .status-badge {
-            padding: 5px 10px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            display: inline-block;
-        }
-        
-        .status-new {
-            background-color: rgba(84, 149, 247, 0.1);
-            color: #5495F7;
-        }
-        
-        .status-open {
-            background-color: rgba(192, 214, 223, 0.1);
-            color: #C0D6DF;
-        }
-        
-        .status-in-progress {
-            background-color: rgba(79, 109, 122, 0.1);
-            color: #4F6D7A;
-        }
-        
-        .status-resolved {
-            background-color: rgba(22, 96, 136, 0.1);
-            color: #166088;
-        }
-        
-        .status-closed {
-            background-color: rgba(219, 233, 238, 0.1);
-            color: #4F6D7A;
-        }
-        
-        .priority-high {
-            color: #d9534f;
-        }
-        
-        .priority-medium {
-            color: #f0ad4e;
-        }
-        
-        .priority-low {
-            color: #5cb85c;
-        }
-        
-        .actions {
-            display: flex;
-            gap: 5px;
-        }
-        
-        .btn-action {
-            padding: 5px;
-            border-radius: 4px;
-            background-color: #e9ecef;
-            border: none;
-            cursor: pointer;
-            color: #495057;
-            transition: background-color 0.2s;
-        }
-        
-        .btn-action:hover {
-            background-color: #dee2e6;
-        }
-        
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .pagination-item {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 5px;
-            border-radius: 4px;
-            border: 1px solid var(--gray);
-            background-color: white;
-            color: var(--dark);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .pagination-item:hover {
-            background-color: var(--gray);
-        }
-        
-        .pagination-item.active {
-            background-color: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            overflow: auto;
-        }
-        
-        .modal-content {
-            background-color: white;
-            margin: 5% auto;
-            padding: 25px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 600px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .modal-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #adb5bd;
-        }
-        
-        .modal-body {
-            margin-bottom: 20px;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-            color: var(--dark);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 0.95rem;
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-        
-        select.form-control {
-            cursor: pointer;
-        }
-        
-        textarea.form-control {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-        
-        .btn-secondary {
-            background-color: #6c757d;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #5a6268;
-        }
-        
-        .assignment-section {
-            margin-top: 40px;
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-                overflow: hidden;
-            }
-            
-            .sidebar-logo {
-                font-size: 1.2rem;
-            }
-            
-            .menu-text {
-                display: none;
-            }
-            
-            .menu-label {
-                display: none;
-            }
-            
-            .menu-item {
-                justify-content: center;
-                padding: 15px;
-            }
-            
-            .menu-item i {
-                margin-right: 0;
-            }
-            
-            .main-content {
-                margin-left: 70px;
-            }
-            
-            .filter-controls {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .search-box {
-                width: 100%;
-            }
-            
-            .search-input {
-                width: 100%;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
+    <!-- Estilos Globais -->
+    <link href="/global.css" rel="stylesheet">
 </head>
 <body>
-
     <aside class="sidebar">
+        <!-- Sidebar igual às outras páginas -->
         <div class="sidebar-header">
             <div class="sidebar-logo">S.G.D <span>•</span></div>
         </div>
@@ -542,574 +61,211 @@
                 <span class="menu-text">Contato</span>
             </a>
             
-            <a href="SDGTelaLogin.html" class="menu-item">
+            <a href="#" class="menu-item logout-link">
                 <i class="fas fa-sign-out-alt"></i>
                 <span class="menu-text">Sair</span>
             </a>
         </nav>
     </aside>
-    
 
     <main class="main-content">
         <div class="header">
             <h1 class="page-title">Meus Tickets</h1>
             
             <div class="user-info">
-                <span class="user-name">Romulo Andrade</span>
+                <span class="user-name">Usuário</span>
                 <div class="user-avatar">RA</div>
             </div>
         </div>
-        
 
-        <div class="filter-section">
-            <div class="filter-controls">
-                <select class="filter-select" id="status-filter">
-                    <option value="all">Todos os Status</option>
-                    <option value="new">Novo</option>
-                    <option value="open">Aberto</option>
-                    <option value="in-progress">Em Progresso</option>
-                    <option value="resolved">Resolvido</option>
-                    <option value="closed">Fechado</option>
-                </select>
-                
-                <select class="filter-select" id="priority-filter">
-                    <option value="all">Todas as Prioridades</option>
-                    <option value="low">Baixa</option>
-                    <option value="medium">Média</option>
-                    <option value="high">Alta</option>
-                    <option value="critical">Crítica</option>
-                </select>
-                
-                <select class="filter-select" id="date-filter">
-                    <option value="all">Todas as Datas</option>
-                    <option value="today">Hoje</option>
-                    <option value="week">Esta Semana</option>
-                    <option value="month">Este Mês</option>
-                </select>
-            </div>
-            
-            <div style="display: flex; align-items: center; gap: 30px;">
-                <div class="search-box">
-                    <input type="text" class="search-input" placeholder="Buscar tickets...">
-                    <button class="search-btn"><i class="fas fa-search"></i></button>
+        <div class="container-fluid">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <select class="form-select" id="statusFilter">
+                                        <option selected>Todos os Status</option>
+                                        <option>Novo</option>
+                                        <option>Aberto</option>
+                                        <option>Em Progresso</option>
+                                        <option>Resolvido</option>
+                                        <option>Fechado</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="form-select" id="prioridadeFilter">
+                                        <option selected>Todas as Prioridades</option>
+                                        <option>Baixa</option>
+                                        <option>Média</option>
+                                        <option>Alta</option>
+                                        <option>Crítica</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" placeholder="Buscar tickets...">
+                                </div>
+                                <div class="col-md-2">
+                                    <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#novoTicketModal">
+                                        <i class="fas fa-plus me-2"></i>Novo Ticket
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                
-                <button class="btn" id="new-ticket-btn">
-                    <i class="fas fa-plus"></i> Novo Ticket
-                </button>
             </div>
-        </div>
-        
 
-        <div class="section-header">
-            <h2 class="section-title">Meus Tickets Atribuídos</h2>
-        </div>
-        
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Assunto</th>
-                        <th>Solicitante</th>
-                        <th>Prioridade</th>
-                        <th>Status</th>
-                        <th>Data</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="my-tickets-table">
-
-                </tbody>
-            </table>
-        </div>
-        
-
-        <div class="assignment-section">
-            <div class="section-header">
-                <h2 class="section-title">Tickets Aguardando Atribuição</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Assunto</th>
+                                            <th>Status</th>
+                                            <th>Prioridade</th>
+                                            <th>Data</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ticketsBody">
+                                        <!-- Tickets serão carregados via JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Assunto</th>
-                            <th>Solicitante</th>
-                            <th>Prioridade</th>
-                            <th>Data</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="unassigned-tickets-table">
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-
-        <div class="pagination">
-            <a href="#" class="pagination-item"><i class="fas fa-angle-left"></i></a>
-            <a href="#" class="pagination-item active">1</a>
-            <a href="#" class="pagination-item">2</a>
-            <a href="#" class="pagination-item">3</a>
-            <a href="#" class="pagination-item"><i class="fas fa-angle-right"></i></a>
         </div>
     </main>
-    
 
-    <div class="modal" id="ticket-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title" id="modal-title">Novo Ticket</h2>
-                <button class="modal-close" id="modal-close">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <form id="ticket-form">
-                    <input type="hidden" id="ticket-id">
-                    
-                    <div class="form-group">
-                        <label for="ticket-subject" class="form-label">Assunto</label>
-                        <input type="text" id="ticket-subject" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ticket-description" class="form-label">Descrição</label>
-                        <textarea id="ticket-description" class="form-control" required></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ticket-requester" class="form-label">Solicitante</label>
-                        <input type="text" id="ticket-requester" class="form-control" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ticket-priority" class="form-label">Prioridade</label>
-                        <select id="ticket-priority" class="form-control" required>
-                            <option value="Baixa">Baixa</option>
-                            <option value="Média">Média</option>
-                            <option value="Alta">Alta</option>
-                            <option value="Crítica">Crítica</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ticket-status" class="form-label">Status</label>
-                        <select id="ticket-status" class="form-control" required>
-                            <option value="Novo">Novo</option>
-                            <option value="Aberto">Aberto</option>
-                            <option value="Em Progresso">Em Progresso</option>
-                            <option value="Resolvido">Resolvido</option>
-                            <option value="Fechado">Fechado</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="ticket-assignee" class="form-label">Atribuir para</label>
-                        <select id="ticket-assignee" class="form-control">
-                            <option value="">Não atribuído</option>
-                            <option value="Romulo Andrade">Romulo Andrade</option>
-                            <option value="Isabela Genize">Isabela Genize</option>
-                            <option value="Gustavo Batista">Gustavo Batista</option>
-                            <option value="Helbert Lima">Helbert Lima</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="modal-cancel">Cancelar</button>
-                <button class="btn" id="modal-save">Salvar</button>
+    <!-- Modal Novo Ticket -->
+    <div class="modal fade" id="novoTicketModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Novo Ticket</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="novoTicketForm">
+                        <div class="mb-3">
+                            <label class="form-label">Assunto</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Descrição</label>
+                            <textarea class="form-control" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Prioridade</label>
+                            <select class="form-select" required>
+                                <option value="">Selecione</option>
+                                <option>Baixa</option>
+                                <option>Média</option>
+                                <option>Alta</option>
+                                <option>Crítica</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="salvarTicket">Salvar</button>
+                </div>
             </div>
         </div>
     </div>
-    
-    <script>
 
-        let myTickets = [
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts Globais -->
+    <script src="/global.js"></script>
+    
+    <!-- Script específico -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ticketsBody = document.getElementById('ticketsBody');
+        const salvarTicketBtn = document.getElementById('salvarTicket');
+        const novoTicketForm = document.getElementById('novoTicketForm');
+
+        // Tickets de exemplo
+        const tickets = [
             {
                 id: 'TK-1001',
-                subject: 'Problema no acesso ao sistema',
-                description: 'Não consigo acessar o módulo financeiro após a última atualização.',
-                requester: 'João Silva',
-                priority: 'Alta',
+                assunto: 'Problema no acesso ao sistema',
                 status: 'Novo',
-                date: '01/04/2025',
-                assignee: 'Romulo Andrade'
+                prioridade: 'Alta',
+                data: '01/04/2025'
             },
             {
                 id: 'TK-1002',
-                subject: 'Solicitar novo equipamento',
-                description: 'Preciso de um novo monitor para o departamento de design.',
-                requester: 'Maria Oliveira',
-                priority: 'Média',
+                assunto: 'Solicitar novo equipamento',
                 status: 'Em Progresso',
-                date: '28/03/2025',
-                assignee: 'Romulo Andrade'
-            },
-            {
-                id: 'TK-1003',
-                subject: 'Erro na geração de relatórios',
-                description: 'O relatório mensal de vendas está gerando valores incorretos.',
-                requester: 'Pedro Santos',
-                priority: 'Crítica',
-                status: 'Aberto',
-                date: '25/03/2025',
-                assignee: 'Romulo Andrade'
+                prioridade: 'Média',
+                data: '28/03/2025'
             }
         ];
-        
-        let unassignedTickets = [
-            {
-                id: 'TK-1004',
-                subject: 'Atualização do software de CRM',
-                description: 'Solicito a atualização do software de CRM para a versão mais recente.',
-                requester: 'Ana Ferreira',
-                priority: 'Baixa',
-                status: 'Novo',
-                date: '20/03/2025',
-                assignee: null
-            },
-            {
-                id: 'TK-1005',
-                subject: 'Problema na impressora do andar 2',
-                description: 'A impressora do segundo andar está apresentando falhas constantes.',
-                requester: 'Carlos Mendes',
-                priority: 'Média',
-                status: 'Novo',
-                date: '15/03/2025',
-                assignee: null
-            }
-        ];
-        
 
-        const myTicketsTable = document.getElementById('my-tickets-table');
-        const unassignedTicketsTable = document.getElementById('unassigned-tickets-table');
-        const ticketModal = document.getElementById('ticket-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalClose = document.getElementById('modal-close');
-        const modalCancel = document.getElementById('modal-cancel');
-        const modalSave = document.getElementById('modal-save');
-        const ticketForm = document.getElementById('ticket-form');
-        const newTicketBtn = document.getElementById('new-ticket-btn');
-        
-
-        function renderMyTickets() {
-            myTicketsTable.innerHTML = '';
-            
-            myTickets.forEach(ticket => {
-
-                let statusClass;
-                switch(ticket.status) {
-                    case 'Novo':
-                        statusClass = 'status-new';
-                        break;
-                    case 'Aberto':
-                        statusClass = 'status-open';
-                        break;
-                    case 'Em Progresso':
-                        statusClass = 'status-in-progress';
-                        break;
-                    case 'Resolvido':
-                        statusClass = 'status-resolved';
-                        break;
-                    case 'Fechado':
-                        statusClass = 'status-closed';
-                        break;
-                }
-                
-
-                let priorityClass;
-                switch(ticket.priority) {
-                    case 'Alta':
-                    case 'Crítica':
-                        priorityClass = 'priority-high';
-                        break;
-                    case 'Média':
-                        priorityClass = 'priority-medium';
-                        break;
-                    case 'Baixa':
-                        priorityClass = 'priority-low';
-                        break;
-                }
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
+        // Renderiza tickets
+        function renderTickets() {
+            ticketsBody.innerHTML = tickets.map(ticket => `
+                <tr>
                     <td>${ticket.id}</td>
-                    <td>${ticket.subject}</td>
-                    <td>${ticket.requester}</td>
-                    <td class="${priorityClass}">${ticket.priority}</td>
-                    <td><span class="status-badge ${statusClass}">${ticket.status}</span></td>
-                    <td>${ticket.date}</td>
-                    <td class="actions">
-                        <button class="btn-action edit-ticket" data-id="${ticket.id}" title="Editar">
+                    <td>${ticket.assunto}</td>
+                    <td>
+                        <span class="badge bg-primary">${ticket.status}</span>
+                    </td>
+                    <td>${ticket.prioridade}</td>
+                    <td>${ticket.data}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn-action delete-ticket" data-id="${ticket.id}" title="Excluir">
+                        <button class="btn btn-sm btn-outline-danger">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
-                `;
-                
-                myTicketsTable.appendChild(row);
-            });
-            
-
-            document.querySelectorAll('.edit-ticket').forEach(button => {
-                button.addEventListener('click', function() {
-                    const ticketId = this.getAttribute('data-id');
-                    openEditModal(ticketId, 'my');
-                });
-            });
-            
-            document.querySelectorAll('.delete-ticket').forEach(button => {
-                button.addEventListener('click', function() {
-                    const ticketId = this.getAttribute('data-id');
-                    if (confirm('Tem certeza que deseja excluir este ticket?')) {
-                        deleteTicket(ticketId, 'my');
-                    }
-                });
-            });
+                </tr>
+            `).join('');
         }
-        
-        function renderUnassignedTickets() {
-            unassignedTicketsTable.innerHTML = '';
-            
-            unassignedTickets.forEach(ticket => {
 
-                let priorityClass;
-                switch(ticket.priority) {
-                    case 'Alta':
-                    case 'Crítica':
-                        priorityClass = 'priority-high';
-                        break;
-                    case 'Média':
-                        priorityClass = 'priority-medium';
-                        break;
-                    case 'Baixa':
-                        priorityClass = 'priority-low';
-                        break;
-                }
-                
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${ticket.id}</td>
-                    <td>${ticket.subject}</td>
-                    <td>${ticket.requester}</td>
-                    <td class="${priorityClass}">${ticket.priority}</td>
-                    <td>${ticket.date}</td>
-                    <td class="actions">
-                        <button class="btn-action assign-ticket" data-id="${ticket.id}" title="Atribuir a mim">
-                            <i class="fas fa-user-plus"></i>
-                        </button>
-                        <button class="btn-action edit-unassigned-ticket" data-id="${ticket.id}" title="Editar">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                    </td>
-                `;
-                
-                unassignedTicketsTable.appendChild(row);
-            });
-            
-
-            document.querySelectorAll('.assign-ticket').forEach(button => {
-                button.addEventListener('click', function() {
-                    const ticketId = this.getAttribute('data-id');
-                    assignTicketToMe(ticketId);
-                });
-            });
-            
-            document.querySelectorAll('.edit-unassigned-ticket').forEach(button => {
-                button.addEventListener('click', function() {
-                    const ticketId = this.getAttribute('data-id');
-                    openEditModal(ticketId, 'unassigned');
-                });
-            });
-        }
-        
-        function openNewTicketModal() {
-            modalTitle.textContent = 'Novo Ticket';
-            document.getElementById('ticket-id').value = '';
-            ticketForm.reset();
-            
-
-            document.getElementById('ticket-status').value = 'Novo';
-            
-            ticketModal.style.display = 'block';
-        }
-        
-        function openEditModal(ticketId, type) {
-            const ticketArray = type === 'my' ? myTickets : unassignedTickets;
-            const ticket = ticketArray.find(t => t.id === ticketId);
-            if (!ticket) return;
-            
-            modalTitle.textContent = 'Editar Ticket';
-            
-            document.getElementById('ticket-id').value = ticket.id;
-            document.getElementById('ticket-subject').value = ticket.subject;
-            document.getElementById('ticket-description').value = ticket.description;
-            document.getElementById('ticket-requester').value = ticket.requester;
-            document.getElementById('ticket-priority').value = ticket.priority;
-            document.getElementById('ticket-status').value = ticket.status;
-            document.getElementById('ticket-assignee').value = ticket.assignee || '';
-            
-            ticketModal.style.display = 'block';
-        }
-        
-        function closeModal() {
-            ticketModal.style.display = 'none';
-        }
-        
-        function saveTicket() {
-            const ticketId = document.getElementById('ticket-id').value;
-            const subject = document.getElementById('ticket-subject').value;
-            const description = document.getElementById('ticket-description').value;
-            const requester = document.getElementById('ticket-requester').value;
-            const priority = document.getElementById('ticket-priority').value;
-            const status = document.getElementById('ticket-status').value;
-            const assignee = document.getElementById('ticket-assignee').value;
-            
-            if (!subject || !description || !requester || !priority || !status) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-            
-
-            const today = new Date();
-            const day = String(today.getDate()).padStart(2, '0');
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const year = today.getFullYear();
-            const formattedDate = `${day}/${month}/${year}`;
-            
-            if (ticketId) {
-
-                let isMyTicket = false;
-                let index = myTickets.findIndex(t => t.id === ticketId);
-                
-                if (index !== -1) {
-                    isMyTicket = true;
-                } else {
-                    index = unassignedTickets.findIndex(t => t.id === ticketId);
-                }
-                
-                if (index !== -1) {
-                    const ticketArray = isMyTicket ? myTickets : unassignedTickets;
-                    
-                    ticketArray[index].subject = subject;
-                    ticketArray[index].description = description;
-                    ticketArray[index].requester = requester;
-                    ticketArray[index].priority = priority;
-                    ticketArray[index].status = status;
-                    
-
-                    if (assignee && !isMyTicket) {
-
-                        const ticket = unassignedTickets.splice(index, 1)[0];
-                        ticket.assignee = assignee;
-                        myTickets.push(ticket);
-                    } else if (!assignee && isMyTicket) {
-
-                        const ticket = myTickets.splice(index, 1)[0];
-                        ticket.assignee = null;
-                        unassignedTickets.push(ticket);
-                    } else if (isMyTicket) {
-
-                        myTickets[index].assignee = assignee;
-                    }
-                }
-            } else {
-
-                const newId = 'TK-' + (1000 + myTickets.length + unassignedTickets.length + 1);
-                
-                const newTicket = {
-                    id: newId,
-                    subject,
-                    description,
-                    requester,
-                    priority,
-                    status,
-                    date: formattedDate,
-                    assignee: assignee || null
+        // Salvar novo ticket
+        salvarTicketBtn.addEventListener('click', function() {
+            if (novoTicketForm.checkValidity()) {
+                const novoTicket = {
+                    id: generateUniqueTicketId(),
+                    assunto: novoTicketForm.querySelector('input').value,
+                    status: 'Novo',
+                    prioridade: novoTicketForm.querySelector('select').value,
+                    data: formatDate(new Date())
                 };
+
+                tickets.push(novoTicket);
+                renderTickets();
                 
-                if (assignee) {
-                    myTickets.push(newTicket);
-                } else {
-                    unassignedTickets.push(newTicket);
-                }
-            }
-            
-            renderMyTickets();
-            renderUnassignedTickets();
-            closeModal();
-        }
-        
-        function deleteTicket(ticketId, type) {
-            if (type === 'my') {
-                myTickets = myTickets.filter(t => t.id !== ticketId);
-                renderMyTickets();
+                // Fecha o modal
+                bootstrap.Modal.getInstance(document.getElementById('novoTicketModal')).hide();
+                
+                // Limpa o formulário
+                novoTicketForm.reset();
+
+                showAlert('Ticket criado com sucesso!', 'success');
             } else {
-                unassignedTickets = unassignedTickets.filter(t => t.id !== ticketId);
-                renderUnassignedTickets();
-            }
-        }
-        
-        function assignTicketToMe(ticketId) {
-            const index = unassignedTickets.findIndex(t => t.id === ticketId);
-            if (index !== -1) {
-                const ticket = unassignedTickets.splice(index, 1)[0];
-                ticket.assignee = 'Romulo Andrade';
-                ticket.status = 'Aberto';
-                myTickets.push(ticket);
-                
-                renderMyTickets();
-                renderUnassignedTickets();
-            }
-        }
-        
-        newTicketBtn.addEventListener('click', openNewTicketModal);
-        modalClose.addEventListener('click', closeModal);
-        modalCancel.addEventListener('click', closeModal);
-        modalSave.addEventListener('click', saveTicket);
-        
-
-        window.addEventListener('click', function(event) {
-            if (event.target === ticketModal) {
-                closeModal();
+                novoTicketForm.classList.add('was-validated');
             }
         });
-        
 
-        document.addEventListener('DOMContentLoaded', function() {
-            renderMyTickets();
-            renderUnassignedTickets();
-            
-
-            document.getElementById('status-filter').addEventListener('change', function() {
-
-                console.log('Filtro de status mudou para:', this.value);
-            });
-            
-            document.getElementById('priority-filter').addEventListener('change', function() {
-
-                console.log('Filtro de prioridade mudou para:', this.value);
-            });
-            
-            document.getElementById('date-filter').addEventListener('change', function() {
-
-                console.log('Filtro de data mudou para:', this.value);
-            });
-            
-
-            document.querySelector('.search-btn').addEventListener('click', function() {
-                const searchTerm = document.querySelector('.search-input').value.toLowerCase();
-                console.log('Buscando por:', searchTerm);
-
-            });
-        });
+        // Renderiza tickets iniciais
+        renderTickets();
+    });
     </script>
 </body>
 </html>

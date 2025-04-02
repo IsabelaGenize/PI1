@@ -4,324 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGD - Sobre a Empresa</title>
-    <style>
-        :root {
-            --primary: #5495F7;
-            --secondary: #166088;
-            --light: #DBE9EE;
-            --dark: #4F6D7A;
-            --gray: #C0D6DF;
-            --light-gray: #DBE9EE;
-            --medium-gray: #C0D6DF;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            min-height: 100vh;
-            display: flex;
-        }
-        
-
-        .sidebar {
-            width: 250px;
-            background-color: var(--dark);
-            color: white;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            border-right: 1px solid rgba(192, 214, 223, 0.2);
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .sidebar-header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .sidebar-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: white;
-        }
-        
-        .sidebar-logo span {
-            color: var(--secondary);
-        }
-        
-        .sidebar-menu {
-            padding: 20px 0;
-        }
-        
-        .menu-item {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .menu-item:hover, .menu-item.active {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        
-        .menu-item i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .menu-label {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 5px 20px;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-
-        .main-content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-        
-        .page-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-        }
-        
-        .user-name {
-            margin-right: 15px;
-            font-weight: 500;
-        }
-        
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500;
-        }
-        
-
-        .about-section {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-            margin-bottom: 30px;
-        }
-        
-        .about-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .about-logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-right: 15px;
-        }
-        
-        .about-logo span {
-            color: var(--secondary);
-        }
-        
-        .about-title {
-            flex: 1;
-        }
-        
-        .about-title h2 {
-            font-size: 1.8rem;
-            color: var(--dark);
-            margin-bottom: 5px;
-        }
-        
-        .about-title p {
-            color: #6c757d;
-            font-size: 1.1rem;
-        }
-        
-        .about-content {
-            color: #495057;
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-        
-        .about-content p {
-            margin-bottom: 20px;
-        }
-        
-        .about-content h3 {
-            font-size: 1.3rem;
-            color: var(--dark);
-            margin: 25px 0 15px;
-        }
-        
-
-        .team-section {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            padding: 30px;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 25px;
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-        }
-        
-        .team-member {
-            text-align: center;
-        }
-        
-        .member-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            background-color: var(--light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 15px;
-            font-size: 3rem;
-            color: var(--primary);
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .member-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        
-        .member-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 5px;
-        }
-        
-        .member-role {
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-        
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .social-link {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--light);
-            color: #6c757d;
-            border-radius: 50%;
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .social-link:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .social-link:nth-child(even):hover {
-            background-color: var(--secondary);
-            color: white;
-        }
-        
-
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-                overflow: hidden;
-            }
-            
-            .sidebar-logo {
-                font-size: 1.2rem;
-            }
-            
-            .menu-text {
-                display: none;
-            }
-            
-            .menu-label {
-                display: none;
-            }
-            
-            .menu-item {
-                justify-content: center;
-                padding: 15px;
-            }
-            
-            .menu-item i {
-                margin-right: 0;
-            }
-            
-            .main-content {
-                margin-left: 70px;
-            }
-            
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
+    <!-- Estilos Globais -->
+    <link href="/global.css" rel="stylesheet">
 </head>
 <body>
-
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">S.G.D <span>•</span></div>
@@ -367,168 +60,163 @@
                 <span class="menu-text">Contato</span>
             </a>
             
-            <a href="SDGTelaLogin.html" class="menu-item">
+            <a href="#" class="menu-item logout-link">
                 <i class="fas fa-sign-out-alt"></i>
                 <span class="menu-text">Sair</span>
             </a>
         </nav>
     </aside>
-    
 
     <main class="main-content">
         <div class="header">
             <h1 class="page-title">Sobre a Empresa</h1>
             
             <div class="user-info">
-                <span class="user-name">Romulo Andrade</span>
+                <span class="user-name">Usuário</span>
                 <div class="user-avatar">RA</div>
             </div>
         </div>
-        
 
-        <section class="about-section">
-            <div class="about-header">
-                <div class="about-logo">S.G.D <span>•</span></div>
-                <div class="about-title">
-                    <h2>Sistema de Gerenciamento de Demandas</h2>
-                    <p>Soluções inteligentes para gerenciamento de tickets</p>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">Sistema de Gerenciamento de Demandas (SGD)</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h4>Nossa História</h4>
+                                    <p>
+                                        Fundada em 2025, a SGD nasceu com o propósito de revolucionar o gerenciamento de chamados e suporte técnico. 
+                                        Nossa missão é simplificar e otimizar o fluxo de trabalho de equipes de atendimento, proporcionando uma ferramenta 
+                                        intuitiva e eficiente para registro, acompanhamento e resolução de demandas.
+                                    </p>
+
+                                    <h4 class="mt-4">Nossos Valores</h4>
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-primary me-2"></i>
+                                            <strong>Inovação:</strong> Buscamos constantemente aprimorar nossos sistemas
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-primary me-2"></i>
+                                            <strong>Simplicidade:</strong> Acreditamos que as melhores soluções são intuitivas
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check-circle text-primary me-2"></i>
+                                            <strong>Eficiência:</strong> Otimizamos processos para economizar tempo
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-light">
+                                        <div class="card-body text-center">
+                                            <h5>Dados da Empresa</h5>
+                                            <ul class="list-unstyled">
+                                                <li><strong>Fundação:</strong> 2025</li>
+                                                <li><strong>Localização:</strong> São Paulo, SP</li>
+                                                <li><strong>Funcionários:</strong> 15-20</li>
+                                                <li><strong>Clientes:</strong> +50</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            
-            <div class="about-content">
-                <p>
-                    Fundada em 2025, a S.G.D é uma empresa especializada no desenvolvimento de sistemas para gerenciamento de chamados e suporte técnico. Nossa missão é facilitar o fluxo de trabalho de equipes de atendimento, proporcionando ferramentas eficientes para o registro, acompanhamento e resolução de demandas.
-                </p>
-                
-                <p>
-                    Nosso sistema foi desenvolvido pensando nas necessidades reais de empresas que lidam diariamente com múltiplos chamados técnicos e solicitações de suporte. A interface intuitiva e os recursos avançados de organização tornam o S.G.D uma solução completa para otimizar o atendimento ao cliente e melhorar a produtividade da equipe.
-                </p>
-                
-                <h3>Nossa Visão</h3>
-                <p>
-                    Ser reconhecida como a melhor e mais eficiente solução para gerenciamento de demandas no mercado, contribuindo para o sucesso dos nossos clientes através de um atendimento de excelência.
-                </p>
-                
-                <h3>Nossos Valores</h3>
-                <p>
-                    <strong>Inovação:</strong> Buscamos constantemente aprimorar nossos sistemas e incorporar novas tecnologias.<br>
-                    <strong>Simplicidade:</strong> Acreditamos que as melhores soluções são aquelas fáceis de usar.<br>
-                    <strong>Eficiência:</strong> Nosso compromisso é otimizar processos e economizar tempo.<br>
-                    <strong>Qualidade:</strong> Trabalhamos com excelência em cada etapa do desenvolvimento.<br>
-                    <strong>Colaboração:</strong> Valorizamos o trabalho em equipe e o feedback constante dos nossos clientes.
-                </p>
-            </div>
-        </section>
-        
 
-        <section class="team-section">
-    <h2 class="section-title">Nossa Equipe</h2>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title mb-0">Nosso Time</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <img src="/images/romulo.jpg" class="rounded-circle mb-3" alt="Romulo Andrade">
+                                            <h5>Romulo Andrade</h5>
+                                            <p class="text-muted">Gerente de Projetos</p>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                                    <i class="fab fa-linkedin"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-outline-dark btn-sm">
+                                                    <i class="fab fa-github"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <img src="/images/isabela.jpeg" class="rounded-circle mb-3" alt="Isabela Genize">
+                                            <h5>Isabela Genize</h5>
+                                            <p class="text-muted">Desenvolvedora Frontend</p>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                                    <i class="fab fa-linkedin"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-outline-dark btn-sm">
+                                                    <i class="fab fa-github"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <img src="/images/gustavo.jpeg" class="rounded-circle mb-3" alt="Gustavo Batista">
+                                            <h5>Gustavo Batista</h5>
+                                            <p class="text-muted">Desenvolvedor Backend</p>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                                    <i class="fab fa-linkedin"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-outline-dark btn-sm">
+                                                    <i class="fab fa-github"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 text-center mb-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <img src="/images/helbert.jpg" class="rounded-circle mb-3" alt="Helbert Lima">
+                                            <h5>Helbert Lima</h5>
+                                            <p class="text-muted">UX/UI Designer</p>
+                                            <div class="d-flex justify-content-center">
+                                                <a href="#" class="btn btn-outline-primary btn-sm me-2">
+                                                    <i class="fab fa-linkedin"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-outline-dark btn-sm">
+                                                    <i class="fab fa-github"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <div class="team-grid">
-        <div class="team-member">
-            <div class="member-avatar">
-                <img src="/images/romulo.jpg" alt="Romulo Andrade">
-            </div>
-            <h3 class="member-name">Romulo Andrade</h3>
-            <p class="member-role">Gerente de Projetos</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-        
-        <div class="team-member">
-            <div class="member-avatar">
-                <img src="/images/isabela.jpeg" alt="Isabela Genize">
-            </div>
-            <h3 class="member-name">Isabela Genize</h3>
-            <p class="member-role">Desenvolvedora Frontend</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-        
-        <div class="team-member">
-            <div class="member-avatar">
-                <img src="/images/gustavo.jpeg" alt="Gustavo Batista">
-            </div>
-            <h3 class="member-name">Gustavo Batista</h3>
-            <p class="member-role">Desenvolvedor Backend</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-        
-        <div class="team-member">
-            <div class="member-avatar">
-                <img src="/images/helbert.jpg" alt="Helbert Lima">
-            </div>
-            <h3 class="member-name">Helbert Lima</h3>
-            <p class="member-role">UX/UI Designer</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
-            </div>
-        </div>
-    </div>
-</section>
-</main>
-    
-<script>
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const menuItems = document.querySelectorAll('.menu-item');
-        
-        menuItems.forEach(item => {
-            item.addEventListener('click', function(e) {
-                if (this.getAttribute('href') === '#') {
-                    e.preventDefault();
-                    alert('Esta funcionalidade será implementada em breve!');
-                }
-            });
-        });
-        
-
-        const photoInputs = document.querySelectorAll('input[type="file"]');
-        photoInputs.forEach(input => {
-            input.addEventListener('change', function(e) {
-                if (this.files && this.files[0]) {
-                    const reader = new FileReader();
-                    const avatarContainer = this.parentElement;
-                    
-                    reader.onload = function(e) {
-
-                        let img = avatarContainer.querySelector('img');
-                        if (!img) {
-                            img = document.createElement('img');
-                            avatarContainer.appendChild(img);
-                        }
-                        img.src = e.target.result;
-                        
-
-                        const icon = avatarContainer.querySelector('i');
-                        if (icon) {
-                            icon.style.display = 'none';
-                        }
-                    };
-                    
-                    reader.readAsDataURL(this.files[0]);
-                    
-
-                    const uploadButton = avatarContainer.querySelector('.photo-upload');
-                    if (uploadButton) {
-                        uploadButton.textContent = 'Alterar foto';
-                    }
-                }
-            });
-        });
-    });
-</script>
+    <!-- Scripts Globais -->
+    <script src="/global.js"></script>
 </body>
 </html>

@@ -4,224 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGD - Login</title>
-    <style>
-        :root {
-            --primary: #5495F7;
-            --secondary: #166088;
-            --light: #DBE9EE;
-            --dark: #4F6D7A;
-            --gray: #C0D6DF;
-            --light-gray: #DBE9EE;
-            --medium-gray: #C0D6DF;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .logo-container {
-            text-align: center;
-            margin-top: 30px;
-        }
-        
-        .logo {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .logo span {
-            color: var(--secondary);
-        }
-        
-        .logo-text {
-            color: var(--dark);
-            font-size: 1rem;
-        }
-        
-        .container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .login-card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            padding: 30px;
-        }
-        
-        .login-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-label {
-            display: block;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            color: var(--dark);
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-        
-        .form-input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-        
-        .form-checkbox {
-            display: flex;
-            align-items: center;
-            font-size: 0.85rem;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        
-        .form-checkbox input {
-            margin-right: 8px;
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        
-        .btn:hover {
-            background-color: #166088;
-        }
-        
-        .login-footer {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #777;
-        }
-        
-        .login-footer a {
-            color: var(--primary);
-            text-decoration: none;
-        }
-        
-        .login-footer a:hover {
-            text-decoration: underline;
-        }
-        
-        .alert {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            display: none;
-        }
-        
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #777;
-            font-size: 0.8rem;
-        }
-    </style>
-</head>
-<body>
-    <div class="logo-container">
-        <div class="logo">S.G.D <span>•</span></div>
-        <div class="logo-text">Sistema de Gerenciamento de Demandas</div>
-    </div>
     
-    <div class="container">
-        <div class="login-card">
-            <h2 class="login-title">Acesso ao Sistema</h2>
-            
-            <div class="alert" id="login-alert">
-                Usuário ou senha incorretos. Tente novamente.
-            </div>
-            
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" id="email" class="form-input" placeholder="Seu email" required>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    
+    <!-- Estilos Globais -->
+    <link href="/global.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row min-vh-100 align-items-center justify-content-center">
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0">
+                    <div class="card-header bg-primary text-white text-center py-4">
+                        <h2 class="mb-0">S.G.D <span class="text-secondary">•</span></h2>
+                        <small class="text-white-50">Sistema de Gerenciamento de Demandas</small>
+                    </div>
+                    <div class="card-body p-4">
+                        <form id="loginForm" novalidate>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" class="form-control" id="email" 
+                                           required 
+                                           placeholder="seuemail@exemplo.com">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Senha</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" 
+                                           required 
+                                           placeholder="Sua senha">
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="fas fa-eye-slash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Lembrar meu acesso</label>
+                            </div>
+                            
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-sign-in-alt me-2"></i>Entrar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                
-                <div class="form-group">
-                    <label for="password" class="form-label">Senha</label>
-                    <input type="password" id="password" class="form-input" placeholder="Sua senha" required>
-                </div>
-                
-                <div class="form-checkbox">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Lembrar meu acesso</label>
-                </div>
-                
-                <button type="submit" class="btn">Entrar</button>
-            </form>
-            
-            <div class="login-footer">
-                <p>Esqueceu sua senha? <a href="#">Recuperar acesso</a></p>
             </div>
         </div>
     </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    <div class="footer">
-        &copy; 2025 - Sistema de Gerenciamento de Demandas - Equipe HIRG
-    </div>
+    <!-- Scripts Globais -->
+    <script src="/global.js"></script>
     
+    <!-- Script específico de login -->
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+
+        // Credenciais de teste
+        const validCredentials = {
+            'admin@sgd.com': 'admin123',
+            'romulo@sgd.com': 'romulo123'
+        };
+
+        // Toggle de visibilidade da senha
+        togglePasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            this.querySelector('i').classList.toggle('fa-eye');
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+
+        // Submissão do formulário
+        loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
 
-            if (email && password) {
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
 
-                window.location.href = 'index.html';
+            if (validCredentials[email] && validCredentials[email] === password) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userEmail', email);
+                window.location.href = 'SDGPaginaInicial.html';
             } else {
-
-                document.getElementById('login-alert').style.display = 'block';
+                showAlert('Credenciais inválidas. Tente novamente.', 'danger');
             }
         });
+    });
     </script>
 </body>
 </html>
