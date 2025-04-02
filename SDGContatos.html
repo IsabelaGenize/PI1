@@ -1,6 +1,6 @@
 </head>
 <body>
-    <!-- Sidebar -->
+    
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">S.G.D <span>•</span></div>
@@ -53,7 +53,7 @@
         </nav>
     </aside>
     
-    <!-- Main Content -->
+
     <main class="main-content">
         <div class="header">
             <h1 class="page-title">Contato</h1>
@@ -65,7 +65,7 @@
         </div>
         
         <div class="contact-layout">
-            <!-- Contact Form -->
+        
             <div class="contact-form">
                 <h2 class="form-title">Envie-nos uma mensagem</h2>
                 
@@ -98,7 +98,7 @@
                 </div>
             </div>
             
-            <!-- Contact Info -->
+            
             <div class="contact-info">
                 <h2 class="info-title">Informações de Contato</h2>
                 
@@ -160,29 +160,25 @@
     </main>
     
     <script>
-        // Script para formulário de contato
+    
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simulação de envio de formulário
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
             const subject = document.getElementById('subject').value;
             const message = document.getElementById('message').value;
             
             if (name && email && subject && message) {
-                // Simular sucesso de envio
                 document.getElementById('formSuccess').style.display = 'block';
                 this.reset();
                 
-                // Esconder mensagem de sucesso após 5 segundos
                 setTimeout(function() {
                     document.getElementById('formSuccess').style.display = 'none';
                 }, 5000);
             }
         });
         
-        // Script para navegação entre páginas
         document.addEventListener('DOMContentLoaded', function() {
             const menuItems = document.querySelectorAll('.menu-item');
             
@@ -230,7 +226,6 @@
             display: flex;
         }
         
-        /* Sidebar */
         .sidebar {
             width: 250px;
             background-color: var(--dark);
@@ -291,7 +286,6 @@
             letter-spacing: 1px;
         }
         
-        /* Main Content */
         .main-content {
             flex: 1;
             margin-left: 250px;
@@ -335,7 +329,6 @@
             font-weight: 500;
         }
         
-        /* Contact Layout */
         .contact-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -415,7 +408,6 @@
             border: 1px solid rgba(40, 167, 69, 0.2);
         }
         
-        /* Contact Info */
         .contact-info {
             background-color: white;
             border-radius: 8px;
@@ -519,7 +511,6 @@
             color: #6c757d;
         }
         
-        /* Media Queries */
         @media (max-width: 992px) {
             .contact-layout {
                 grid-template-columns: 1fr;

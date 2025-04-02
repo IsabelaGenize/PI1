@@ -507,7 +507,6 @@
         </nav>
     </aside>
     
-    <!-- Main Content -->
     <main class="main-content">
         <div class="header">
             <h1 class="page-title">Dashboard</h1>
@@ -518,7 +517,6 @@
             </div>
         </div>
         
-        <!-- Dashboard Cards -->
         <div class="dashboard-cards">
             <div class="card stat-card">
                 <div class="stat-icon bg-primary">
@@ -561,7 +559,6 @@
             </div>
         </div>
         
-        <!-- Tickets Section -->
         <div class="section-header">
             <h2 class="section-title">Tickets Recentes</h2>
             
@@ -584,13 +581,11 @@
                     </tr>
                 </thead>
                 <tbody id="tickets-table">
-                    <!-- Dados serão inseridos via JavaScript -->
                 </tbody>
             </table>
         </div>
     </main>
     
-    <!-- Modal de Ticket -->
     <div class="modal" id="ticket-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -648,7 +643,7 @@
     </div>
     
     <script>
-        // Dados simulados de tickets
+
         let tickets = [
             {
                 id: 'TK-1001',
@@ -715,7 +710,6 @@
             }
         ];
         
-        // Elementos DOM
         const ticketsTable = document.getElementById('tickets-table');
         const ticketModal = document.getElementById('ticket-modal');
         const modalTitle = document.getElementById('modal-title');
@@ -724,15 +718,12 @@
         const modalSave = document.getElementById('modal-save');
         const ticketForm = document.getElementById('ticket-form');
         
-        // Botões para novo ticket
         const newTicketBtn = document.getElementById('new-ticket-btn');
         
-        // Funções
         function renderTickets() {
             ticketsTable.innerHTML = '';
             
             tickets.forEach(ticket => {
-                // Determinar a classe CSS para o status
                 let statusClass;
                 switch(ticket.status) {
                     case 'Novo':
@@ -773,7 +764,6 @@
                 ticketsTable.appendChild(row);
             });
             
-            // Adicionar event listeners para os botões de ação
             document.querySelectorAll('.edit-ticket').forEach(button => {
                 button.addEventListener('click', function() {
                     const ticketId = this.getAttribute('data-id');
@@ -796,7 +786,6 @@
             document.getElementById('ticket-id').value = '';
             ticketForm.reset();
             
-            // Por padrão, coloca status como "Novo"
             document.getElementById('ticket-status').value = 'Novo';
             
             ticketModal.style.display = 'block';
@@ -836,7 +825,6 @@
                 return;
             }
             
-            // Formatação da data atual
             const today = new Date();
             const day = String(today.getDate()).padStart(2, '0');
             const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -844,7 +832,7 @@
             const formattedDate = `${day}/${month}/${year}`;
             
             if (ticketId) {
-                // Editando ticket existente
+
                 const index = tickets.findIndex(t => t.id === ticketId);
                 if (index !== -1) {
                     tickets[index].subject = subject;
@@ -854,7 +842,6 @@
                     tickets[index].status = status;
                 }
             } else {
-                // Criando novo ticket
                 const newId = 'TK-' + (1000 + tickets.length + 1);
                 
                 tickets.push({
@@ -877,20 +864,17 @@
             renderTickets();
         }
         
-        // Event Listeners
         newTicketBtn.addEventListener('click', openNewTicketModal);
         modalClose.addEventListener('click', closeModal);
         modalCancel.addEventListener('click', closeModal);
         modalSave.addEventListener('click', saveTicket);
         
-        // Fechar modal ao clicar fora dele
         window.addEventListener('click', function(event) {
             if (event.target === ticketModal) {
                 closeModal();
             }
         });
         
-        // Inicialização
         document.addEventListener('DOMContentLoaded', function() {
             renderTickets();
         });

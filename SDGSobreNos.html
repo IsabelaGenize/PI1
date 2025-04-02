@@ -28,7 +28,7 @@
             display: flex;
         }
         
-        /* Sidebar */
+
         .sidebar {
             width: 250px;
             background-color: var(--dark);
@@ -89,7 +89,7 @@
             letter-spacing: 1px;
         }
         
-        /* Main Content */
+
         .main-content {
             flex: 1;
             margin-left: 250px;
@@ -133,7 +133,7 @@
             font-weight: 500;
         }
         
-        /* About Section */
+
         .about-section {
             background-color: white;
             border-radius: 8px;
@@ -190,7 +190,7 @@
             margin: 25px 0 15px;
         }
         
-        /* Team Section */
+
         .team-section {
             background-color: white;
             border-radius: 8px;
@@ -281,7 +281,7 @@
             color: white;
         }
         
-        /* Media Queries */
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 70px;
@@ -321,7 +321,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar -->
+
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">S.G.D <span>•</span></div>
@@ -374,7 +374,7 @@
         </nav>
     </aside>
     
-    <!-- Main Content -->
+
     <main class="main-content">
         <div class="header">
             <h1 class="page-title">Sobre a Empresa</h1>
@@ -385,7 +385,7 @@
             </div>
         </div>
         
-        <!-- About Section -->
+
         <section class="about-section">
             <div class="about-header">
                 <div class="about-logo">S.G.D <span>•</span></div>
@@ -420,8 +420,8 @@
             </div>
         </section>
         
-        <!-- Team Section -->
-<section class="team-section">
+
+        <section class="team-section">
     <h2 class="section-title">Nossa Equipe</h2>
     
     <div class="team-grid">
@@ -481,7 +481,7 @@
 </main>
     
 <script>
-    // Script para navegação entre páginas
+
     document.addEventListener('DOMContentLoaded', function() {
         const menuItems = document.querySelectorAll('.menu-item');
         
@@ -494,7 +494,7 @@
             });
         });
         
-        // Função para carregar e mostrar fotos 
+
         const photoInputs = document.querySelectorAll('input[type="file"]');
         photoInputs.forEach(input => {
             input.addEventListener('change', function(e) {
@@ -503,7 +503,7 @@
                     const avatarContainer = this.parentElement;
                     
                     reader.onload = function(e) {
-                        // Criar ou atualizar a imagem
+
                         let img = avatarContainer.querySelector('img');
                         if (!img) {
                             img = document.createElement('img');
@@ -511,7 +511,7 @@
                         }
                         img.src = e.target.result;
                         
-                        // Esconder o ícone padrão
+
                         const icon = avatarContainer.querySelector('i');
                         if (icon) {
                             icon.style.display = 'none';
@@ -520,7 +520,7 @@
                     
                     reader.readAsDataURL(this.files[0]);
                     
-                    // Mudar o texto do botão
+
                     const uploadButton = avatarContainer.querySelector('.photo-upload');
                     if (uploadButton) {
                         uploadButton.textContent = 'Alterar foto';

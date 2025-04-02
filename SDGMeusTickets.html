@@ -32,7 +32,7 @@
             display: flex;
         }
         
-        /* Sidebar */
+
         .sidebar {
             width: 250px;
             background-color: var(--dark);
@@ -93,7 +93,7 @@
             letter-spacing: 1px;
         }
         
-        /* Main Content */
+
         .main-content {
             flex: 1;
             margin-left: 250px;
@@ -137,7 +137,7 @@
             font-weight: 500;
         }
         
-        /* Filter Section */
+
         .filter-section {
             display: flex;
             justify-content: space-between;
@@ -205,7 +205,7 @@
             background-color: #166088;
         }
         
-        /* Tickets Section */
+
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -219,7 +219,6 @@
             color: var(--dark);
         }
         
-        /* Table */
         .table-container {
             background-color: white;
             border-radius: 8px;
@@ -317,7 +316,7 @@
             background-color: #dee2e6;
         }
         
-        /* Pagination */
+
         .pagination {
             display: flex;
             justify-content: center;
@@ -349,7 +348,7 @@
             border-color: var(--primary);
         }
         
-        /* Modal */
+
         .modal {
             display: none;
             position: fixed;
@@ -445,12 +444,10 @@
             background-color: #5a6268;
         }
         
-        /* Assignment Section */
         .assignment-section {
             margin-top: 40px;
         }
         
-        /* Media Queries */
         @media (max-width: 768px) {
             .sidebar {
                 width: 70px;
@@ -499,7 +496,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 <body>
-    <!-- Sidebar -->
+
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">S.G.D <span>•</span></div>
@@ -552,7 +549,7 @@
         </nav>
     </aside>
     
-    <!-- Main Content -->
+
     <main class="main-content">
         <div class="header">
             <h1 class="page-title">Meus Tickets</h1>
@@ -563,7 +560,7 @@
             </div>
         </div>
         
-        <!-- Filter Section -->
+
         <div class="filter-section">
             <div class="filter-controls">
                 <select class="filter-select" id="status-filter">
@@ -603,7 +600,7 @@
             </div>
         </div>
         
-        <!-- My Tickets Section -->
+
         <div class="section-header">
             <h2 class="section-title">Meus Tickets Atribuídos</h2>
         </div>
@@ -622,12 +619,12 @@
                     </tr>
                 </thead>
                 <tbody id="my-tickets-table">
-                    <!-- Dados serão inseridos via JavaScript -->
+
                 </tbody>
             </table>
         </div>
         
-        <!-- Assignment Section -->
+
         <div class="assignment-section">
             <div class="section-header">
                 <h2 class="section-title">Tickets Aguardando Atribuição</h2>
@@ -646,13 +643,13 @@
                         </tr>
                     </thead>
                     <tbody id="unassigned-tickets-table">
-                        <!-- Dados serão inseridos via JavaScript -->
+
                     </tbody>
                 </table>
             </div>
         </div>
         
-        <!-- Pagination -->
+
         <div class="pagination">
             <a href="#" class="pagination-item"><i class="fas fa-angle-left"></i></a>
             <a href="#" class="pagination-item active">1</a>
@@ -662,7 +659,7 @@
         </div>
     </main>
     
-    <!-- Modal de Ticket -->
+
     <div class="modal" id="ticket-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -731,7 +728,7 @@
     </div>
     
     <script>
-        // Dados simulados de tickets
+
         let myTickets = [
             {
                 id: 'TK-1001',
@@ -788,7 +785,7 @@
             }
         ];
         
-        // Elementos DOM
+
         const myTicketsTable = document.getElementById('my-tickets-table');
         const unassignedTicketsTable = document.getElementById('unassigned-tickets-table');
         const ticketModal = document.getElementById('ticket-modal');
@@ -799,12 +796,12 @@
         const ticketForm = document.getElementById('ticket-form');
         const newTicketBtn = document.getElementById('new-ticket-btn');
         
-        // Funções
+
         function renderMyTickets() {
             myTicketsTable.innerHTML = '';
             
             myTickets.forEach(ticket => {
-                // Determinar a classe CSS para o status
+
                 let statusClass;
                 switch(ticket.status) {
                     case 'Novo':
@@ -824,7 +821,7 @@
                         break;
                 }
                 
-                // Determinar a classe CSS para a prioridade
+
                 let priorityClass;
                 switch(ticket.priority) {
                     case 'Alta':
@@ -860,7 +857,7 @@
                 myTicketsTable.appendChild(row);
             });
             
-            // Adicionar event listeners para os botões de ação
+
             document.querySelectorAll('.edit-ticket').forEach(button => {
                 button.addEventListener('click', function() {
                     const ticketId = this.getAttribute('data-id');
@@ -882,7 +879,7 @@
             unassignedTicketsTable.innerHTML = '';
             
             unassignedTickets.forEach(ticket => {
-                // Determinar a classe CSS para a prioridade
+
                 let priorityClass;
                 switch(ticket.priority) {
                     case 'Alta':
@@ -917,7 +914,7 @@
                 unassignedTicketsTable.appendChild(row);
             });
             
-            // Adicionar event listeners para os botões de ação
+
             document.querySelectorAll('.assign-ticket').forEach(button => {
                 button.addEventListener('click', function() {
                     const ticketId = this.getAttribute('data-id');
@@ -938,7 +935,7 @@
             document.getElementById('ticket-id').value = '';
             ticketForm.reset();
             
-            // Por padrão, coloca status como "Novo"
+
             document.getElementById('ticket-status').value = 'Novo';
             
             ticketModal.style.display = 'block';
@@ -980,7 +977,7 @@
                 return;
             }
             
-            // Formatação da data atual
+
             const today = new Date();
             const day = String(today.getDate()).padStart(2, '0');
             const month = String(today.getMonth() + 1).padStart(2, '0');
@@ -988,7 +985,7 @@
             const formattedDate = `${day}/${month}/${year}`;
             
             if (ticketId) {
-                // Editando ticket existente
+
                 let isMyTicket = false;
                 let index = myTickets.findIndex(t => t.id === ticketId);
                 
@@ -1007,24 +1004,24 @@
                     ticketArray[index].priority = priority;
                     ticketArray[index].status = status;
                     
-                    // Verificar se houve mudança de atribuição
+
                     if (assignee && !isMyTicket) {
-                        // Mover o ticket de não atribuído para atribuído
+
                         const ticket = unassignedTickets.splice(index, 1)[0];
                         ticket.assignee = assignee;
                         myTickets.push(ticket);
                     } else if (!assignee && isMyTicket) {
-                        // Mover o ticket de atribuído para não atribuído
+
                         const ticket = myTickets.splice(index, 1)[0];
                         ticket.assignee = null;
                         unassignedTickets.push(ticket);
                     } else if (isMyTicket) {
-                        // Apenas atualizar o assignee
+
                         myTickets[index].assignee = assignee;
                     }
                 }
             } else {
-                // Criando novo ticket
+
                 const newId = 'TK-' + (1000 + myTickets.length + unassignedTickets.length + 1);
                 
                 const newTicket = {
@@ -1073,45 +1070,44 @@
             }
         }
         
-        // Event Listeners
         newTicketBtn.addEventListener('click', openNewTicketModal);
         modalClose.addEventListener('click', closeModal);
         modalCancel.addEventListener('click', closeModal);
         modalSave.addEventListener('click', saveTicket);
         
-        // Fechar modal ao clicar fora dele
+
         window.addEventListener('click', function(event) {
             if (event.target === ticketModal) {
                 closeModal();
             }
         });
         
-        // Inicialização
+
         document.addEventListener('DOMContentLoaded', function() {
             renderMyTickets();
             renderUnassignedTickets();
             
-            // Adicionar event listener para filtros
+
             document.getElementById('status-filter').addEventListener('change', function() {
-                // Implementação de filtro por status iria aqui
+
                 console.log('Filtro de status mudou para:', this.value);
             });
             
             document.getElementById('priority-filter').addEventListener('change', function() {
-                // Implementação de filtro por prioridade iria aqui
+
                 console.log('Filtro de prioridade mudou para:', this.value);
             });
             
             document.getElementById('date-filter').addEventListener('change', function() {
-                // Implementação de filtro por data iria aqui
+
                 console.log('Filtro de data mudou para:', this.value);
             });
             
-            // Adicionar event listener para a busca
+
             document.querySelector('.search-btn').addEventListener('click', function() {
                 const searchTerm = document.querySelector('.search-input').value.toLowerCase();
                 console.log('Buscando por:', searchTerm);
-                // Implementação da busca iria aqui
+
             });
         });
     </script>
