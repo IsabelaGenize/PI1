@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGD - Sistema de Gerenciamento de Demandas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5495F7;
+            --secondary: #166088;
+            --light: #DBE9EE;
+            --dark: #4F6D7A;
+            --gray: #C0D6DF;
+            --light-gray: #DBE9EE;
+            --medium-gray: #C0D6DF;
+            --dark-blue: #166088;
+            --yellow-accent: #DBE9EE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--light);
+        }
+        
+        /* Header */
+        .header {
+            background-color: var(--dark);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+        
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .brand-name span {
+            color: var(--yellow-accent);
+        }
+        
+        .brand-subtitle {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info {
+            text-align: right;
+            margin-right: 15px;
+        }
+        
+        .user-name {
+            font-weight: 500;
+        }
+        
+        .user-role {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-position: center;
+            background-size: cover;
+            background-repeat: repeat;
+            opacity: 0.08;
+            z-index: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .feature-card:hover::before {
+            opacity: 0.15;
+        }
+        
+        .feature-card.tickets::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,20 L70,20 C75,20 80,25 80,30 L80,70 C80,75 75,80 70,80 L30,80 C25,80 20,75 20,70 L20,30 C20,25 25,20 30,20 Z M30,30 L30,70 L70,70 L70,30 L30,30 Z' fill='%231e53a3' fill-opacity='0.1'/%3E%3Cpath d='M40,45 L60,45 L60,55 L40,55 Z' fill='%231e53a3' fill-opacity='0.1'/%3E%3C/svg%3E");
+        }
+        
+        .feature-card.dashboard::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M80,70 L80,30 L20,30 L20,70 L80,70 Z M30,40 L70,40 L70,60 L30,60 L30,40 Z' fill='%234a7ac9' fill-opacity='0.1'/%3E%3Cpath d='M30,20 L40,20 L40,30 L30,30 L30,20 Z M45,20 L55,20 L55,30 L45,30 L45,20 Z M60,20 L70,20 L70,30 L60,30 L60,20 Z M30,70 L40,70 L40,80 L30,80 L30,70 Z M45,70 L55,70 L55,80 L45,80 L45,70 Z M60,70 L70,70 L70,80 L60,80 L60,70 Z' fill='%234a7ac9' fill-opacity='0.1'/%3E%3C/svg%3E");
+        }
+        
+        .feature-card.about::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath d='M30,20 L70,20 L70,80 L30,80 L30,20 Z M40,30 L60,30 L60,70 L40,70 L40,30 Z' fill='%232c3e50' fill-opacity='0.1'/%3E%3Cpath d='M20,50 L30,50 L30,60 L20,60 L20,50 Z M70,50 L80,50 L80,60 L70,60 L70,50 Z M45,40 L55,40 L55,50 L45,50 L45,40 Z M45,55 L55,55 L55,65 L45,65 L45,55 Z' fill='%232c3e50' fill-opacity='0.1'/%3E%3C/svg%3E");
+        }
+        
+        .feature-icon {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-icon.tickets {
+            background-color: var(--primary);
+        }
+        
+        .feature-icon.dashboard {
+            background-color: var(--secondary);
+        }
+        
+        .feature-icon.about {
+            background-color: var(--dark-blue);
+        }
+        
+        .feature-icon i {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-content {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            
+            .user-info {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-container">
+            <div class="logo-img">
+                <i class="fas fa-ticket-alt" style="color: var(--light);"></i>
+            </div>
+            <div>
+                <div class="brand-name">S.G.D <span>•</span></div>
+                <div class="brand-subtitle">Sistema de Gerenciamento de Demandas</div>
+            </div>
+        </div>
+        
+        <div class="user-profile">
+            <div class="user-info">
+                <div class="user-name">Romulo Andrade</div>
+                <div class="user-role">Gerente de Projetos</div>
+            </div>
+            <div class="user-avatar">RA</div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <h1 style="font-size: 4.5rem; font-weight: 700; color: var(--dark); margin-bottom: 50px; text-align: center;">SGD</h1>
+        
+        <div class="features-grid">
+            <!-- Tickets Card -->
+            <a href="SDGMeusTickets.html" class="feature-card tickets">
+                <div class="feature-icon tickets">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">Meus Tickets</h3>
+                </div>
+            </a>
+            
+            <!-- Dashboard Card -->
+            <a href="SDGDashboard.html" class="feature-card dashboard">
+                <div class="feature-icon dashboard">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">Dashboard</h3>
+                </div>
+            </a>
+            
+            <!-- About Card -->
+            <a href="SDGSobreNos.html" class="feature-card about">
+                <div class="feature-icon about">
+                    <i class="fas fa-building"></i>
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title">Sobre a Empresa</h3>
+                </div>
+            </a>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2025 - Sistema de Gerenciamento de Demandas - Equipe HIRG
+    </footer>
+</body>
+</html>
