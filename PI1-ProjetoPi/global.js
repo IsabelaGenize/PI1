@@ -557,7 +557,7 @@ function initMyTicketsPage() {
             subject: 'Problema no acesso ao sistema',
             description: 'Não consigo acessar o módulo financeiro após a última atualização.',
             requester: 'João Silva',
-            priority: 'Alta',
+            priority: 'Média',
             status: 'Novo',
             date: '01/04/2025',
             assignee: 'Romulo Andrade'
@@ -567,7 +567,7 @@ function initMyTicketsPage() {
             subject: 'Solicitar novo equipamento',
             description: 'Preciso de um novo monitor para o departamento de design.',
             requester: 'Maria Oliveira',
-            priority: 'Média',
+            priority: 'Baixa',
             status: 'Em Progresso',
             date: '28/03/2025',
             assignee: 'Romulo Andrade'
@@ -577,7 +577,7 @@ function initMyTicketsPage() {
             subject: 'Erro na geração de relatórios',
             description: 'O relatório mensal de vendas está gerando valores incorretos.',
             requester: 'Pedro Santos',
-            priority: 'Crítica',
+            priority: 'Alta',
             status: 'Aberto',
             date: '25/03/2025',
             assignee: 'Romulo Andrade'
@@ -1496,143 +1496,6 @@ function updateReportData() {
             }
         });
     }
-}
-
-// Inicialização do seletor de temas
-function initThemeSelector() {
-    // Adiciona o seletor de temas na página
-    const themeSelector = document.createElement('div');
-    themeSelector.className = 'theme-selector';
-    themeSelector.innerHTML = '<i class="fas fa-palette"></i>';
-    document.body.appendChild(themeSelector);
-    
-    // Adiciona as opções de tema
-    const themeOptions = document.createElement('div');
-    themeOptions.className = 'theme-options';
-    themeOptions.innerHTML = `
-        <div class="theme-option theme-default" data-theme="default">
-            <div class="theme-color"></div>
-            <span class="theme-title">Azul (Padrão)</span>
-        </div>
-        <div class="theme-option theme-green" data-theme="green">
-            <div class="theme-color"></div>
-            <span class="theme-title">Verde</span>
-        </div>
-        <div class="theme-option theme-purple" data-theme="purple">
-            <div class="theme-color"></div>
-            <span class="theme-title">Roxo</span>
-        </div>
-        <div class="theme-option theme-orange" data-theme="orange">
-            <div class="theme-color"></div>
-            <span class="theme-title">Laranja</span>
-        </div>
-        <div class="theme-option theme-dark" data-theme="dark">
-            <div class="theme-color"></div>
-            <span class="theme-title">Escuro</span>
-        </div>
-    `;
-    document.body.appendChild(themeOptions);
-    
-    // Carrega o tema atual
-    const currentTheme = localStorage.getItem('theme') || 'default';
-    setTheme(currentTheme);
-    
-    // Marca a opção atual como ativa
-    const activeOption = themeOptions.querySelector(`[data-theme="${currentTheme}"]`);
-    if (activeOption) {
-        activeOption.classList.add('active');
-    }
-    
-    // Abre/fecha o seletor ao clicar
-    themeSelector.addEventListener('click', function() {
-        themeOptions.classList.toggle('open');
-    });
-    
-    // Fecha o seletor ao clicar fora dele
-    document.addEventListener('click', function(e) {
-        if (!themeSelector.contains(e.target) && !themeOptions.contains(e.target)) {
-            themeOptions.classList.remove('open');
-        }
-    });
-    
-   // Muda o tema ao clicar em uma opção
-   const options = themeOptions.querySelectorAll('.theme-option');
-   options.forEach(option => {
-       option.addEventListener('click', function() {
-           const theme = this.getAttribute('data-theme');
-           
-           // Remove a classe active de todas as opções
-           options.forEach(opt => opt.classList.remove('active'));
-           
-           // Adiciona a classe active à opção clicada
-           this.classList.add('active');
-           
-           // Define o tema
-           setTheme(theme);
-           
-           // Salva a preferência
-           localStorage.setItem('theme', theme);
-           
-           // Fecha o seletor
-           themeOptions.classList.remove('open');
-           
-           // Atualiza o select no perfil do usuário, se estiver na página de perfil
-           const themePreferenceSelect = document.getElementById('theme-preference');
-           if (themePreferenceSelect) {
-               themePreferenceSelect.value = theme === 'default' ? 'light' : theme;
-           }
-           
-           // Mostra uma notificação
-           showAlert(`Tema alterado para ${this.querySelector('.theme-title').textContent}`, 'success');
-       });
-   });
-   
-   // Atualiza o tema quando mudado na página de perfil
-   const themePreferenceSelect = document.getElementById('theme-preference');
-   if (themePreferenceSelect) {
-       themePreferenceSelect.addEventListener('change', function() {
-           let theme = this.value;
-           
-           // Converte 'light' para 'default'
-           if (theme === 'light') {
-               theme = 'default';
-           }
-           
-           // Se for 'system', verifica a preferência do sistema
-           if (theme === 'system') {
-               theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default';
-           }
-           
-           // Define e salva o tema
-           setTheme(theme);
-           localStorage.setItem('theme', theme);
-           
-           // Atualiza a opção ativa no seletor
-           options.forEach(opt => opt.classList.remove('active'));
-           const activeOption = themeOptions.querySelector(`[data-theme="${theme}"]`);
-           if (activeOption) {
-               activeOption.classList.add('active');
-           }
-       });
-   }
-}
-
-// Define o tema
-function setTheme(theme) {
-   // Remove todas as classes de tema
-   document.body.classList.remove('theme-default', 'theme-green', 'theme-purple', 'theme-orange', 'theme-dark');
-   
-   // Adiciona a classe do tema selecionado
-   if (theme !== 'default') {
-       document.body.classList.add(`theme-${theme}`);
-   }
-   
-   // Se o tema for escuro, adiciona a classe ao HTML para os estilos CSS
-   if (theme === 'dark') {
-       document.documentElement.classList.add('dark-mode');
-   } else {
-       document.documentElement.classList.remove('dark-mode');
-   }
 }
 
 // Inicialização da página de Administração de Usuários
