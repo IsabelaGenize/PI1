@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGD - Meus Tickets</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    
+    <!-- CSS Global -->
+    <link rel="stylesheet" href="global.css">
+</head>
+<body>
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">S.G.D <span>•</span></div>
+        </div>
+        
+        <nav class="sidebar-menu">
+            <a href="SDGPaginaInicial.html" class="menu-item">
+                <i class="fas fa-home"></i>
+                <span class="menu-text">Página Inicial</span>
+            </a>
+            
+            <a href="SDGDashboard.html" class="menu-item">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="menu-text">Dashboard</span>
+            </a>
+            
+            <a href="SDGMeusTickets.html" class="menu-item">
+                <i class="fas fa-ticket-alt"></i>
+                <span class="menu-text">Meus Tickets</span>
+            </a>
+            
+            <div class="menu-label">Gerenciamento</div>
+            
+            <a href="SDGKanbanBoard.html" class="menu-item">
+                <i class="fas fa-tasks"></i>
+                <span class="menu-text">Kanban Board</span>
+            </a>
+            
+            <a href="SDGRelatorios.html" class="menu-item">
+                <i class="fas fa-chart-bar"></i>
+                <span class="menu-text">Relatórios</span>
+            </a>
+            
+            <div class="menu-label">Sistema</div>
+            
+            <a href="SDGPerfilUsuario.html" class="menu-item">
+                <i class="fas fa-user"></i>
+                <span class="menu-text">Meu Perfil</span>
+            </a>
+            
+            <a href="SDGSobreNos.html" class="menu-item">
+                <i class="fas fa-building"></i>
+                <span class="menu-text">Nossa Empresa</span>
+            </a>
+            
+            <a href="SDGContatos.html" class="menu-item active">
+                <i class="fas fa-envelope"></i>
+                <span class="menu-text">Contato</span>
+            </a>
+
+            <a href="SDGAdminUsuarios.html" class="menu-item admin-only">
+                <i class="fas fa-users-cog"></i>
+                <span class="menu-text">Admin Usuários</span>
+            </a>
+            
+            <a href="SDGTelaLogin.html" class="menu-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="menu-text">Sair</span>
+            </a>
+        </nav>
+    </aside>
+    
+    <main class="main-content">
+        <div class="header">
+            <h1 class="page-title">Meus Tickets</h1>
+            
+            <div class="user-info">
+                <span class="user-name">Romulo Andrade</span>
+                <div class="user-avatar">RA</div>
+            </div>
+        </div>
+        
+        <div class="filter-section">
+            <div class="filter-controls">
+                <select class="filter-select" id="status-filter">
+                    <option value="all">Todos os Status</option>
+                    <option value="new">Novo</option>
+                    <option value="open">Aberto</option>
+                    <option value="in-progress">Em Progresso</option>
+                    <option value="resolved">Resolvido</option>
+                    <option value="closed">Fechado</option>
+                </select>
+                
+                <select class="filter-select" id="priority-filter">
+                    <option value="all">Todas as Prioridades</option>
+                    <option value="low">Baixa</option>
+                    <option value="medium">Média</option>
+                    <option value="high">Alta</option>
+                    <option value="critical">Crítica</option>
+                </select>
+                
+                <select class="filter-select" id="date-filter">
+                    <option value="all">Todas as Datas</option>
+                    <option value="today">Hoje</option>
+                    <option value="week">Esta Semana</option>
+                    <option value="month">Este Mês</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; align-items: center; gap: 30px;">
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Buscar tickets...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+                
+                <button class="btn
+                " id="new-ticket-btn">
+                    <i class="fas fa-plus"></i> Novo Ticket
+                </button>
+            </div>
+        </div>
+        
+        <div class="section-header">
+            <h2 class="section-title">Meus Tickets Atribuídos</h2>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Assunto</th>
+                        <th>Solicitante</th>
+                        <th>Prioridade</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="my-tickets-table">
+                    <!-- Tabela preenchida via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="assignment-section">
+            <div class="section-header">
+                <h2 class="section-title">Tickets Aguardando Atribuição</h2>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Assunto</th>
+                            <th>Solicitante</th>
+                            <th>Prioridade</th>
+                            <th>Data</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="unassigned-tickets-table">
+                        <!-- Tabela preenchida via JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="pagination">
+            <a href="#" class="pagination-item"><i class="fas fa-angle-left"></i></a>
+            <a href="#" class="pagination-item active">1</a>
+            <a href="#" class="pagination-item">2</a>
+            <a href="#" class="pagination-item">3</a>
+            <a href="#" class="pagination-item"><i class="fas fa-angle-right"></i></a>
+        </div>
+    </main>
+    
+    <div class="modal" id="ticket-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Novo Ticket</h2>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="ticket-form">
+                    <input type="hidden" id="ticket-id">
+                    
+                    <div class="form-group">
+                        <label for="ticket-subject" class="form-label">Assunto</label>
+                        <input type="text" id="ticket-subject" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticket-description" class="form-label">Descrição</label>
+                        <textarea id="ticket-description" class="form-control" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticket-requester" class="form-label">Solicitante</label>
+                        <input type="text" id="ticket-requester" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticket-priority" class="form-label">Prioridade</label>
+                        <select id="ticket-priority" class="form-control" required>
+                            <option value="Baixa">Baixa</option>
+                            <option value="Média">Média</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Crítica">Crítica</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticket-status" class="form-label">Status</label>
+                        <select id="ticket-status" class="form-control" required>
+                            <option value="Novo">Novo</option>
+                            <option value="Aberto">Aberto</option>
+                            <option value="Em Progresso">Em Progresso</option>
+                            <option value="Resolvido">Resolvido</option>
+                            <option value="Fechado">Fechado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="ticket-assignee" class="form-label">Atribuir para</label>
+                        <select id="ticket-assignee" class="form-control">
+                            <option value="">Não atribuído</option>
+                            <option value="Romulo Andrade">Romulo Andrade</option>
+                            <option value="Isabela Genize">Isabela Genize</option>
+                            <option value="Gustavo Batista">Gustavo Batista</option>
+                            <option value="Helbert Lima">Helbert Lima</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-cancel">Cancelar</button>
+                <button class="btn" id="modal-save">Salvar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript Global -->
+    <script src="global.js"></script>
+</body>
+</html>
