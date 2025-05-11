@@ -1,5 +1,62 @@
 // Configurações e Funções Globais do Sistema SGD
 
+// Lista de usuários administradores com permissão
+const adminUsers = [
+    'romulo.andrade@sgd.com.br',
+    'isabela.genize@sgd.com.br',
+    'gustavo.batista@sgd.com.br',
+    'helbert.lima@sgd.com.br'
+];
+
+// Armazenamento dos usuários do sistema
+let systemUsers = [
+    {
+        id: 1,
+        name: 'Romulo Andrade',
+        email: 'romulo.andrade@sgd.com.br',
+        phone: '(11) 98765-4321',
+        department: 'ti',
+        role: 'admin',
+        status: 'active'
+    },
+    {
+        id: 2,
+        name: 'Isabela Genize',
+        email: 'isabela.genize@sgd.com.br',
+        phone: '(11) 98765-4322',
+        department: 'marketing',
+        role: 'admin',
+        status: 'active'
+    },
+    {
+        id: 3,
+        name: 'Gustavo Batista',
+        email: 'gustavo.batista@sgd.com.br',
+        phone: '(11) 98765-4323',
+        department: 'ti',
+        role: 'admin',
+        status: 'active'
+    },
+    {
+        id: 4,
+        name: 'Helbert Lima',
+        email: 'helbert.lima@sgd.com.br',
+        phone: '(11) 98765-4324',
+        department: 'rh',
+        role: 'admin',
+        status: 'active'
+    },
+    {
+        id: 5,
+        name: 'Maria Silva',
+        email: 'maria.silva@sgd.com.br',
+        phone: '(11) 98765-4325',
+        department: 'financeiro',
+        role: 'user',
+        status: 'active'
+    }
+];
+
 // Inicialização do sistema
 document.addEventListener('DOMContentLoaded', function() {
     checkAuthentication();
@@ -89,24 +146,61 @@ function setupDisabledMenuItems() {
         });
     });
 }
-
-// Configuração de informações do usuário
+// Configuração de informações do usuário - MODIFICADA
 function setupUserInfo() {
     const userEmail = localStorage.getItem('userEmail') || 'usuario@sgd.com.br';
     const userNameElements = document.querySelectorAll('.user-name');
     const userAvatarElements = document.querySelectorAll('.user-avatar');
+    const profileNameElement = document.getElementById('profile-name');
+    const profileRoleElement = document.getElementById('profile-role');
+    const profileEmailElement = document.getElementById('profile-email');
 
     if (userEmail) {
-        const userName = userEmail.split('@')[0];
-        const userInitials = userName.substring(0, 2).toUpperCase();
+        // Extrai o nome do usuário do email (antes do @)
+        let userName = userEmail.split('@')[0];
+        
+        // Formata o nome para exibição (primeira letra maiúscula, substitui pontos por espaços)
+        userName = userName.replace(/\./g, ' ').split(' ')
+            .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+            .join(' ');
+        
+        // Extrai as iniciais para o avatar
+        const userNameParts = userName.split(' ');
+        let userInitials = '';
+        
+        if (userNameParts.length >= 2) {
+            userInitials = userNameParts[0].charAt(0) + userNameParts[1].charAt(0);
+        } else {
+            userInitials = userName.substring(0, 2);
+        }
+        
+        userInitials = userInitials.toUpperCase();
 
+        // Atualiza os elementos de nome de usuário em toda a interface
         userNameElements.forEach(el => {
             if (el) el.textContent = userName;
         });
 
+        // Atualiza os avatares em toda a interface
         userAvatarElements.forEach(el => {
             if (el) el.textContent = userInitials;
         });
+        
+        // Atualiza os campos específicos da página de perfil, se existirem
+        if (profileNameElement) profileNameElement.textContent = userName;
+        if (profileEmailElement) profileEmailElement.textContent = userEmail;
+        
+        // Definir um cargo padrão ou manter o valor existente
+        if (profileRoleElement && !profileRoleElement.textContent) {
+            profileRoleElement.textContent = 'Usuário';
+        }
+        
+        // Preencher campos de formulário na página de perfil
+        const userNameInput = document.getElementById('user-name');
+        const userEmailInput = document.getElementById('user-email');
+        
+        if (userNameInput) userNameInput.value = userName;
+        if (userEmailInput) userEmailInput.value = userEmail;
     }
 }
 
@@ -212,18 +306,35 @@ function setupHomePageCards() {
     });
 }
 
-// Verifica se o usuário atual é um administrador
+// Verifica se o usuário atual é um administrador - MODIFICADO
 function checkAdminStatus() {
-    // Em um sistema real, isso seria verificado pelo perfil do usuário
-    const isAdmin = true;
+    const userEmail = localStorage.getItem('userEmail');
+    
+    // Verifica se o email termina com @sgd.com.br e está na lista de administradores
+    const isAdmin = userEmail && 
+                   userEmail.endsWith('@sgd.com.br') && 
+                   adminUsers.includes(userEmail);
     
     if (isAdmin) {
         document.body.classList.add('is-admin');
     } else {
         document.body.classList.remove('is-admin');
+        
+        // Se não for admin e estiver na página de administração, redireciona
+        const currentPath = window.location.pathname;
+        if (currentPath.includes('SDGAdminUsuarios.html')) {
+            window.location.href = 'SDGPaginaInicial.html';
+        }
     }
+    
+    // Controla a visibilidade dos itens de menu administrativo
+    const adminMenuItems = document.querySelectorAll('.admin-only');
+    adminMenuItems.forEach(item => {
+        item.style.display = isAdmin ? 'flex' : 'none';
+    });
+    
+    return isAdmin;
 }
-
 // Inicialização da página de Login
 function initLoginPage() {
     const loginForm = document.getElementById('login-form');
@@ -547,7 +658,6 @@ function initDashboardPage() {
     // Inicializa a página
     renderTickets();
 }
-
 // Inicialização da página de Meus Tickets
 function initMyTicketsPage() {
     // Dados dos tickets atribuídos ao usuário
@@ -880,7 +990,13 @@ function initMyTicketsPage() {
         const index = unassignedTickets.findIndex(t => t.id === ticketId);
         if (index !== -1) {
             const ticket = unassignedTickets.splice(index, 1)[0];
-            ticket.assignee = 'Romulo Andrade';
+            const userEmail = localStorage.getItem('userEmail') || 'usuario@sgd.com.br';
+            const userName = userEmail.split('@')[0].replace(/\./g, ' ')
+                .split(' ')
+                .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+                .join(' ');
+            
+            ticket.assignee = userName;
             ticket.status = 'Aberto';
             myTickets.push(ticket);
             
@@ -908,7 +1024,6 @@ function initMyTicketsPage() {
     renderMyTickets();
     renderUnassignedTickets();
 }
-
 // Inicialização da página de Contatos
 function initContactPage() {
     const contactForm = document.getElementById('contactForm');
@@ -1280,7 +1395,6 @@ function updateColumnCounts(column) {
         countElement.textContent = cards.length;
     }
 }
-
 // Inicialização da página de Relatórios
 function initReportsPage() {
     const generateReportBtn = document.getElementById('generate-report');
@@ -1497,332 +1611,521 @@ function updateReportData() {
         });
     }
 }
+// Helper functions para obter nomes formatados
+function getDepartmentName(departmentCode) {
+    const departments = {
+        'ti': 'TI',
+        'rh': 'RH',
+        'financeiro': 'Financeiro',
+        'marketing': 'Marketing',
+        'operacoes': 'Operações'
+    };
+    return departments[departmentCode] || departmentCode;
+}
+
+function getRoleName(roleCode) {
+    const roles = {
+        'admin': 'Administrador',
+        'user': 'Usuário'
+    };
+    return roles[roleCode] || roleCode;
+}
+
+function getStatusName(statusCode) {
+    const statusNames = {
+        'active': 'Ativo',
+        'inactive': 'Inativo'
+    };
+    return statusNames[statusCode] || statusCode;
+}
 
 // Inicialização da página de Administração de Usuários
 function initAdminUsersPage() {
-   // Event listeners para campos e botões
-   setupUserFormEvents();
-   setupBulkActions();
-   setupPasswordGenerator();
-   setupUserFilters();
+    // Verifica se o usuário tem permissão para acessar esta página
+    if (!checkAdminStatus()) {
+        window.location.href = 'SDGPaginaInicial.html';
+        return;
+    }
+    
+    renderUsersTable();
+    setupUserFormEvents();
+    setupBulkActions();
+    setupPasswordGenerator();
+    setupUserFilters();
+}
+
+// Renderiza a tabela de usuários
+function renderUsersTable() {
+    const tbody = document.getElementById('users-table-body');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    systemUsers.forEach(user => {
+        // Define as classes de perfil e status
+        let roleClass = user.role === 'admin' ? 'role-admin' : 'role-user';
+        let statusClass = user.status === 'active' ? 'status-active' : 'status-inactive';
+        
+        // Obtém as iniciais do usuário
+        const nameParts = user.name.split(' ');
+        let initials = '';
+        
+        if (nameParts.length >= 2) {
+            initials = nameParts[0].charAt(0) + nameParts[1].charAt(0);
+        } else {
+            initials = nameParts[0].substring(0, 2);
+        }
+        
+        initials = initials.toUpperCase();
+        
+        // Cria a linha da tabela
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>
+                <input type="checkbox" id="user-${user.id}">
+            </td>
+            <td class="user-cell">
+                <div class="user-avatar small">${initials}</div>
+                ${user.name}
+            </td>
+            <td>${user.email}</td>
+            <td>${getDepartmentName(user.department)}</td>
+            <td><span class="role-badge ${roleClass}">${getRoleName(user.role)}</span></td>
+            <td><span class="status-badge ${statusClass}">${getStatusName(user.status)}</span></td>
+            <td class="actions">
+                <button class="btn-action edit-user" data-id="${user.id}" title="Editar">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn-action delete-user" data-id="${user.id}" title="Excluir">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td>
+        `;
+        
+        tbody.appendChild(row);
+    });
+    
+    // Adiciona event listeners para os botões de ação
+    addUserActionListeners();
+}
+
+// Adiciona event listeners para botões de ação na tabela de usuários
+function addUserActionListeners() {
+    document.querySelectorAll('.edit-user').forEach(button => {
+        button.addEventListener('click', function() {
+            const userId = parseInt(this.getAttribute('data-id'));
+            openEditUserModal(userId);
+        });
+    });
+    
+    document.querySelectorAll('.delete-user').forEach(button => {
+        button.addEventListener('click', function() {
+            const userId = parseInt(this.getAttribute('data-id'));
+            openDeleteConfirmModal(userId);
+        });
+    });
 }
 
 // Configuração dos eventos do formulário de usuário
 function setupUserFormEvents() {
-   const addUserBtn = document.getElementById('add-user-btn');
-   const userModal = document.getElementById('user-modal');
-   const userModalClose = document.getElementById('user-modal-close');
-   const userModalCancel = document.getElementById('user-modal-cancel');
-   const userModalSave = document.getElementById('user-modal-save');
-   
-   // Botões de edição de usuário
-   document.querySelectorAll('.edit-user').forEach(button => {
-       button.addEventListener('click', function() {
-           const userId = this.getAttribute('data-id');
-           openUserEditModal(userId);
-       });
-   });
-   
-   // Botões de exclusão de usuário
-   document.querySelectorAll('.delete-user').forEach(button => {
-       button.addEventListener('click', function() {
-           const userId = this.getAttribute('data-id');
-           openDeleteConfirmModal(userId);
-       });
-   });
-   
-   // Abrir modal para novo usuário
-   if (addUserBtn) {
-       addUserBtn.addEventListener('click', function() {
-           openNewUserModal();
-       });
-   }
-   
-   // Fechamento de modais
-   if (userModalClose) userModalClose.addEventListener('click', () => userModal.style.display = 'none');
-   if (userModalCancel) userModalCancel.addEventListener('click', () => userModal.style.display = 'none');
-   
-   // Salvar usuário
-   if (userModalSave) {
-       userModalSave.addEventListener('click', function() {
-           saveUser();
-       });
-   }
-   
-   // Fechar modais ao clicar fora
-   window.addEventListener('click', function(e) {
-       if (e.target === userModal) {
-           userModal.style.display = 'none';
-       }
-       
-       const deleteConfirmModal = document.getElementById('delete-confirm-modal');
-       if (e.target === deleteConfirmModal) {
-           deleteConfirmModal.style.display = 'none';
-       }
-   });
-}
-
-// Configuração de ações em massa
-function setupBulkActions() {
-   const selectAllCheckbox = document.getElementById('select-all-users');
-   const userCheckboxes = document.querySelectorAll('input[id^="user-"]');
-   const bulkActionSelect = document.getElementById('bulk-action');
-   const applyBulkBtn = document.getElementById('apply-bulk');
-   
-   // Seleção de todos os usuários
-   if (selectAllCheckbox) {
-       selectAllCheckbox.addEventListener('change', function() {
-           userCheckboxes.forEach(checkbox => {
-               checkbox.checked = this.checked;
-           });
-       });
-   }
-   
-   // Aplicar ação em massa
-   if (applyBulkBtn) {
-       applyBulkBtn.addEventListener('click', function() {
-           const action = bulkActionSelect.value;
-           
-           if (!action) {
-               showAlert('Por favor, selecione uma ação.', 'danger');
-               return;
-           }
-           
-           const selectedUsers = Array.from(userCheckboxes).filter(checkbox => checkbox.checked);
-           
-           if (selectedUsers.length === 0) {
-               showAlert('Por favor, selecione pelo menos um usuário.', 'danger');
-               return;
-           }
-           
-           if (action === 'delete') {
-               const deleteConfirmModal = document.getElementById('delete-confirm-modal');
-               deleteConfirmModal.style.display = 'block';
-           } else {
-               const actionText = action === 'activate' ? 'ativados' : 'desativados';
-               showAlert(`${selectedUsers.length} usuários foram ${actionText} com sucesso!`, 'success');
-           }
-       });
-   }
+    const addUserBtn = document.getElementById('add-user-btn');
+    const userModal = document.getElementById('user-modal');
+    const userModalClose = document.getElementById('user-modal-close');
+    const userModalCancel = document.getElementById('user-modal-cancel');
+    const userModalSave = document.getElementById('user-modal-save');
+    
+    // Botão para adicionar novo usuário
+    if (addUserBtn) {
+        addUserBtn.addEventListener('click', function() {
+            openNewUserModal();
+        });
+    }
+    
+    // Fechamento de modais
+    if (userModalClose) {
+        userModalClose.addEventListener('click', function() {
+            userModal.style.display = 'none';
+        });
+    }
+    
+    if (userModalCancel) {
+        userModalCancel.addEventListener('click', function() {
+            userModal.style.display = 'none';
+        });
+    }
+    
+    // Salvar usuário
+    if (userModalSave) {
+        userModalSave.addEventListener('click', function() {
+            saveUser();
+        });
+    }
+    
+    // Fechamento de modal ao clicar fora
+    window.addEventListener('click', function(e) {
+        if (e.target === userModal) {
+            userModal.style.display = 'none';
+        }
+        
+        const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+        if (e.target === deleteConfirmModal) {
+            deleteConfirmModal.style.display = 'none';
+        }
+    });
+    
+    // Evento para botão de confirmar exclusão
+    const deleteModalConfirm = document.getElementById('delete-modal-confirm');
+    if (deleteModalConfirm) {
+        deleteModalConfirm.addEventListener('click', function() {
+            const userId = parseInt(this.getAttribute('data-id'));
+            deleteUser(userId);
+            document.getElementById('delete-confirm-modal').style.display = 'none';
+        });
+    }
+    
+    // Evento para botão de cancelar exclusão
+    const deleteModalCancel = document.getElementById('delete-modal-cancel');
+    if (deleteModalCancel) {
+        deleteModalCancel.addEventListener('click', function() {
+            document.getElementById('delete-confirm-modal').style.display = 'none';
+        });
+    }
+    
+    // Evento para botão de fechar modal de exclusão
+    const deleteModalClose = document.getElementById('delete-modal-close');
+    if (deleteModalClose) {
+        deleteModalClose.addEventListener('click', function() {
+            document.getElementById('delete-confirm-modal').style.display = 'none';
+        });
+    }
 }
 
 // Configuração do gerador de senha
 function setupPasswordGenerator() {
-   const generatePasswordCheckbox = document.getElementById('generate-password');
-   const manualPasswordSection = document.getElementById('manual-password');
-   const autoPasswordSection = document.getElementById('auto-password');
-   const regeneratePasswordBtn = document.getElementById('regenerate-password');
-   const generatedPasswordInput = document.getElementById('generated-password');
-   
-   if (generatePasswordCheckbox) {
-       generatePasswordCheckbox.addEventListener('change', function() {
-           manualPasswordSection.style.display = this.checked ? 'none' : 'block';
-           autoPasswordSection.style.display = this.checked ? 'block' : 'none';
-           
-           if (this.checked) {
-               generatedPasswordInput.value = generateRandomPassword();
-           }
-       });
-   }
-   
-   if (regeneratePasswordBtn) {
-       regeneratePasswordBtn.addEventListener('click', function() {
-           generatedPasswordInput.value = generateRandomPassword();
-       });
-   }
+    const generatePasswordCheckbox = document.getElementById('generate-password');
+    const manualPasswordSection = document.getElementById('manual-password');
+    const autoPasswordSection = document.getElementById('auto-password');
+    const regeneratePasswordBtn = document.getElementById('regenerate-password');
+    const generatedPasswordInput = document.getElementById('generated-password');
+    
+    if (generatePasswordCheckbox) {
+        generatePasswordCheckbox.addEventListener('change', function() {
+            manualPasswordSection.style.display = this.checked ? 'none' : 'block';
+            autoPasswordSection.style.display = this.checked ? 'block' : 'none';
+            
+            if (this.checked) {
+                generatedPasswordInput.value = generateRandomPassword();
+            }
+        });
+    }
+    
+    if (regeneratePasswordBtn) {
+        regeneratePasswordBtn.addEventListener('click', function() {
+            generatedPasswordInput.value = generateRandomPassword();
+        });
+    }
 }
 
 // Configuração dos filtros de usuários
 function setupUserFilters() {
-   const roleFilter = document.getElementById('role-filter');
-   const departmentFilter = document.getElementById('department-filter');
-   const statusFilter = document.getElementById('status-filter');
-   const searchBtn = document.getElementById('user-search-btn');
-   
-   if (roleFilter) {
-       roleFilter.addEventListener('change', function() {
-           filterUsers();
-       });
-   }
-   
-   if (departmentFilter) {
-       departmentFilter.addEventListener('change', function() {
-           filterUsers();
-       });
-   }
-   
-   if (statusFilter) {
-       statusFilter.addEventListener('change', function() {
-           filterUsers();
-       });
-   }
-   
-   if (searchBtn) {
-       searchBtn.addEventListener('click', function() {
-           const searchTerm = document.getElementById('user-search').value;
-           if (searchTerm) {
-               showAlert(`Buscando por: ${searchTerm}`, 'info');
-               filterUsers(searchTerm);
-           }
-       });
-   }
+    const roleFilter = document.getElementById('role-filter');
+    const departmentFilter = document.getElementById('department-filter');
+    const statusFilter = document.getElementById('status-filter');
+    const searchBtn = document.getElementById('user-search-btn');
+    
+    if (roleFilter) {
+        roleFilter.addEventListener('change', function() {
+            filterUsers();
+        });
+    }
+    
+    if (departmentFilter) {
+        departmentFilter.addEventListener('change', function() {
+            filterUsers();
+        });
+    }
+    
+    if (statusFilter) {
+        statusFilter.addEventListener('change', function() {
+            filterUsers();
+        });
+    }
+    
+    if (searchBtn) {
+        searchBtn.addEventListener('click', function() {
+            const searchTerm = document.getElementById('user-search').value;
+            if (searchTerm) {
+                showAlert(`Buscando por: ${searchTerm}`, 'info');
+                filterUsers(searchTerm);
+            }
+        });
+    }
 }
 
 // Função para filtrar usuários (simulada)
 function filterUsers(searchTerm) {
-   showAlert('Aplicando filtros...', 'info');
-   // Em um sistema real, aqui seria feita a filtragem dos usuários
+    showAlert('Aplicando filtros...', 'info');
+    // Em um sistema real, aqui seria feita a filtragem dos usuários
 }
 
-// Funções para manipulação de modais de usuário
-function openUserEditModal(userId) {
-   // Simulação de dados de usuário
-   const mockUsers = {
-       '1': {
-           name: 'Romulo Andrade',
-           email: 'romulo.andrade@sgd.com.br',
-           phone: '(11) 98765-4321',
-           department: 'ti',
-           role: 'admin',
-           status: 'active'
-       },
-       '2': {
-           name: 'Isabela Genize',
-           email: 'isabela.genize@sgd.com.br',
-           phone: '(11) 98765-4322',
-           department: 'marketing',
-           role: 'manager',
-           status: 'active'
-       },
-       '3': {
-           name: 'Gustavo Batista',
-           email: 'gustavo.batista@sgd.com.br',
-           phone: '(11) 98765-4323',
-           department: 'ti',
-           role: 'agent',
-           status: 'active'
-       },
-       '4': {
-           name: 'Helbert Lima',
-           email: 'helbert.lima@sgd.com.br',
-           phone: '(11) 98765-4324',
-           department: 'rh',
-           role: 'user',
-           status: 'inactive'
-       },
-       '5': {
-           name: 'Maria Silva',
-           email: 'maria.silva@sgd.com.br',
-           phone: '(11) 98765-4325',
-           department: 'financeiro',
-           role: 'user',
-           status: 'pending'
-       }
-   };
-   
-   const user = mockUsers[userId];
-   
-   if (user) {
-       // Preenche o formulário com os dados do usuário
-       document.getElementById('user-modal-title').textContent = 'Editar Usuário';
-       document.getElementById('user-id').value = userId;
-       document.getElementById('user-name').value = user.name;
-       document.getElementById('user-email').value = user.email;
-       document.getElementById('user-phone').value = user.phone;
-       document.getElementById('user-department').value = user.department;
-       document.getElementById('user-role').value = user.role;
-       document.getElementById('user-status').value = user.status;
-       
-       // Esconde a seção de senha para edição
-       document.querySelector('.password-section').style.display = 'none';
-       
-       // Exibe o modal
-       document.getElementById('user-modal').style.display = 'block';
-   }
+// Abre o modal para editar um usuário
+function openEditUserModal(userId) {
+    const user = systemUsers.find(u => u.id === userId);
+    if (!user) return;
+    
+    // Atualiza o título do modal
+    document.getElementById('user-modal-title').textContent = 'Editar Usuário';
+    
+    // Preenche o formulário com os dados do usuário
+    document.getElementById('user-id').value = user.id;
+    document.getElementById('user-name').value = user.name;
+    document.getElementById('user-email').value = user.email;
+    document.getElementById('user-phone').value = user.phone || '';
+    document.getElementById('user-department').value = user.department;
+    document.getElementById('user-role').value = user.role;
+    document.getElementById('user-status').value = user.status;
+    
+    // Esconde a seção de senha para edição
+    document.querySelector('.password-section').style.display = 'none';
+    
+    // Exibe o modal
+    document.getElementById('user-modal').style.display = 'block';
 }
 
+// Abre o modal para criar um novo usuário
 function openNewUserModal() {
-   // Reset do formulário
-   document.getElementById('user-form').reset();
-   document.getElementById('user-id').value = '';
-   
-   // Configura o título do modal
-   document.getElementById('user-modal-title').textContent = 'Novo Usuário';
-   
-   // Exibe a seção de senha
-   document.querySelector('.password-section').style.display = 'block';
-   
-   // Exibe o modal
-   document.getElementById('user-modal').style.display = 'block';
+    // Reset do formulário
+    document.getElementById('user-form').reset();
+    document.getElementById('user-id').value = '';
+    
+    // Configura o título do modal
+    document.getElementById('user-modal-title').textContent = 'Novo Usuário';
+    
+    // Exibe a seção de senha
+    document.querySelector('.password-section').style.display = 'block';
+    
+    // Exibe o modal
+    document.getElementById('user-modal').style.display = 'block';
 }
 
+// Abre o modal de confirmação de exclusão
 function openDeleteConfirmModal(userId) {
-   const deleteModalConfirm = document.getElementById('delete-modal-confirm');
-   
-   // Armazena o ID do usuário para exclusão
-   deleteModalConfirm.setAttribute('data-id', userId);
-   
-   // Exibe o modal de confirmação
-   document.getElementById('delete-confirm-modal').style.display = 'block';
-   
-   // Adiciona event listener para o botão de confirmar exclusão
-   deleteModalConfirm.addEventListener('click', function() {
-       deleteUser(this.getAttribute('data-id'));
-       document.getElementById('delete-confirm-modal').style.display = 'none';
-   });
+    const deleteModalConfirm = document.getElementById('delete-modal-confirm');
+    
+    // Armazena o ID do usuário para exclusão
+    deleteModalConfirm.setAttribute('data-id', userId);
+    
+    // Exibe o modal de confirmação
+    document.getElementById('delete-confirm-modal').style.display = 'block';
 }
 
-// Função para salvar usuário
+// Salva um usuário (novo ou editado)
 function saveUser() {
-   // Validação básica
-   const userName = document.getElementById('user-name').value;
-   const userEmail = document.getElementById('user-email').value;
-   const userDepartment = document.getElementById('user-department').value;
-   const userRole = document.getElementById('user-role').value;
-   
-   if (!userName || !userEmail || !userDepartment || !userRole) {
-       showAlert('Por favor, preencha todos os campos obrigatórios.', 'danger');
-       return;
-   }
-   
-   // Em um sistema real, os dados seriam enviados para o servidor
-   document.getElementById('user-modal').style.display = 'none';
-   
-   const userId = document.getElementById('user-id').value;
-   const isNewUser = !userId;
-   
-   showAlert(isNewUser ? 'Usuário criado com sucesso!' : 'Usuário atualizado com sucesso!', 'success');
+    // Coleta os dados do formulário
+    const userId = document.getElementById('user-id').value;
+    const name = document.getElementById('user-name').value;
+    const email = document.getElementById('user-email').value;
+    const phone = document.getElementById('user-phone').value;
+    const department = document.getElementById('user-department').value;
+    const role = document.getElementById('user-role').value;
+    const status = document.getElementById('user-status').value;
+    
+    // Validação básica
+    if (!name || !email || !department || !role || !status) {
+        showAlert('Por favor, preencha todos os campos obrigatórios.', 'danger');
+        return;
+    }
+    
+    if (userId) {
+        // Editar usuário existente
+        const index = systemUsers.findIndex(u => u.id === parseInt(userId));
+        if (index !== -1) {
+            systemUsers[index].name = name;
+            systemUsers[index].email = email;
+            systemUsers[index].phone = phone;
+            systemUsers[index].department = department;
+            systemUsers[index].role = role;
+            systemUsers[index].status = status;
+        }
+    } else {
+        // Criar novo usuário
+        // Verifica senha para novos usuários
+        let password = '';
+        
+        if (document.getElementById('generate-password').checked) {
+            password = document.getElementById('generated-password').value;
+        } else {
+            password = document.getElementById('user-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (!password) {
+                showAlert('Por favor, defina uma senha para o usuário.', 'danger');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('As senhas não coincidem.', 'danger');
+                return;
+            }
+        }
+        
+        // Gera um novo ID (maior ID atual + 1)
+        const maxId = systemUsers.reduce((max, user) => Math.max(max, user.id), 0);
+        const newId = maxId + 1;
+        
+        systemUsers.push({
+            id: newId,
+            name,
+            email,
+            phone,
+            department,
+            role,
+            status
+            // senha seria armazenada de forma segura em um sistema real
+        });
+    }
+    
+    // Atualiza a tabela e fecha o modal
+    renderUsersTable();
+    document.getElementById('user-modal').style.display = 'none';
+    
+    showAlert(userId ? 'Usuário atualizado com sucesso!' : 'Usuário criado com sucesso!', 'success');
 }
 
-// Função para excluir usuário
+// Exclui um usuário
 function deleteUser(userId) {
-   // Em um sistema real, o usuário seria excluído no servidor
-   showAlert('Usuário excluído com sucesso!', 'success');
+    // Verifica se o usuário está tentando excluir um dos administradores principais
+    const userToDelete = systemUsers.find(u => u.id === userId);
+    
+    if (userToDelete && adminUsers.includes(userToDelete.email)) {
+        showAlert('Não é possível excluir um administrador do sistema.', 'danger');
+        return;
+    }
+    
+    // Remove o usuário da lista
+    systemUsers = systemUsers.filter(u => u.id !== userId);
+    
+    // Atualiza a tabela
+    renderUsersTable();
+    
+    showAlert('Usuário excluído com sucesso!', 'success');
 }
 
-// Função para gerar senha aleatória
-function generateRandomPassword(length = 12) {
-   const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-   const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-   const numbers = '0123456789';
-   const special = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
-   
-   const allChars = lowercase + uppercase + numbers + special;
-   
-   // Garante que pelo menos um caractere de cada tipo esteja presente
-   let password = '';
-   password += lowercase.charAt(Math.floor(Math.random() * lowercase.length));
-   password += uppercase.charAt(Math.floor(Math.random() * uppercase.length));
-   password += numbers.charAt(Math.floor(Math.random() * numbers.length));
-   password += special.charAt(Math.floor(Math.random() * special.length));
-   
-   // Completa o restante da senha
-   for (let i = 4; i < length; i++) {
-       password += allChars.charAt(Math.floor(Math.random() * allChars.length));
-   }
-   
-   // Embaralha a senha
-   password = password.split('').sort(() => 0.5 - Math.random()).join('');
-   
-   return password;
+// Configuração das ações em massa
+function setupBulkActions() {
+    const selectAllCheckbox = document.getElementById('select-all-users');
+    const bulkActionSelect = document.getElementById('bulk-action');
+    const applyBulkBtn = document.getElementById('apply-bulk');
+    
+    // Seleção de todos os usuários
+    if (selectAllCheckbox) {
+        selectAllCheckbox.addEventListener('change', function() {
+            document.querySelectorAll('input[id^="user-"]').forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    }
+    
+    // Aplicar ação em massa
+    if (applyBulkBtn) {
+        applyBulkBtn.addEventListener('click', function() {
+            const action = bulkActionSelect.value;
+            
+            if (!action) {
+                showAlert('Por favor, selecione uma ação.', 'danger');
+                return;
+            }
+            
+            // Obter todos os usuários selecionados
+            const selectedCheckboxes = document.querySelectorAll('input[id^="user-"]:checked');
+            
+            if (selectedCheckboxes.length === 0) {
+                showAlert('Por favor, selecione pelo menos um usuário.', 'danger');
+                return;
+            }
+            
+            // Extrair IDs dos usuários selecionados
+            const selectedUserIds = Array.from(selectedCheckboxes).map(checkbox => {
+                return parseInt(checkbox.id.replace('user-', ''));
+            });
+            
+            if (action === 'delete') {
+                // Verificar se algum administrador principal está selecionado
+                const containsProtectedAdmin = systemUsers
+                    .filter(user => selectedUserIds.includes(user.id))
+                    .some(user => adminUsers.includes(user.email));
+                
+                if (containsProtectedAdmin) {
+                    showAlert('Não é possível excluir administradores do sistema.', 'danger');
+                    return;
+                }
+                
+                // Confirmar exclusão em massa
+                if (confirm(`Tem certeza que deseja excluir ${selectedUserIds.length} usuário(s) selecionado(s)?`)) {
+                    // Excluir usuários selecionados
+                    systemUsers = systemUsers.filter(user => !selectedUserIds.includes(user.id));
+                    renderUsersTable();
+                    showAlert(`${selectedUserIds.length} usuário(s) excluído(s) com sucesso!`, 'success');
+                }
+            } else if (action === 'activate') {
+                // Ativar usuários selecionados
+                systemUsers.forEach(user => {
+                    if (selectedUserIds.includes(user.id)) {
+                        user.status = 'active';
+                    }
+                });
+                renderUsersTable();
+                showAlert(`${selectedUserIds.length} usuário(s) ativado(s) com sucesso!`, 'success');
+            } else if (action === 'deactivate') {
+                // Desativar usuários selecionados
+                // Verificar se algum administrador principal está selecionado
+                const containsProtectedAdmin = systemUsers
+                    .filter(user => selectedUserIds.includes(user.id))
+                    .some(user => adminUsers.includes(user.email));
+                
+                if (containsProtectedAdmin) {
+                    showAlert('Não é possível desativar administradores do sistema.', 'danger');
+                    return;
+                }
+                
+                systemUsers.forEach(user => {
+                    if (selectedUserIds.includes(user.id) && !adminUsers.includes(user.email)) {
+                        user.status = 'inactive';
+                    }
+                });
+                renderUsersTable();
+                showAlert(`${selectedUserIds.length} usuário(s) desativado(s) com sucesso!`, 'success');
+            }
+        });
+    }
+}
+
+// Gera uma senha aleatória
+function generateRandomPassword(length = 10) {
+    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+    const special = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+    
+    const allChars = lowercase + uppercase + numbers + special;
+    
+    let password = '';
+    // Garante pelo menos um caractere de cada tipo
+    password += lowercase.charAt(Math.floor(Math.random() * lowercase.length));
+    password += uppercase.charAt(Math.floor(Math.random() * uppercase.length));
+    password += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    password += special.charAt(Math.floor(Math.random() * special.length));
+    
+    // Preenche o resto da senha
+    for (let i = 4; i < length; i++) {
+        password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+    }
+    
+    // Embaralha a senha
+    return password.split('').sort(() => 0.5 - Math.random()).join('');
+}
+
+// Função para inicializar o seletor de tema
+function initThemeSelector() {
+    // Placeholder para futura implementação de tema claro/escuro
 }
